@@ -139,3 +139,4 @@
   - Deep forest: canopy wind; trunk creaks; a woodpecker; a distant owl; lapping.
   - Cemetery: cold wind with a whistle; crows; a creaking gate; a faint howl; a church bell; the bog.
   The Ambience bus ducks 14 dB under a hole-in's applause and comes back up after. New tests/soundscape_test.gd (windowed) covers every set and file, seamless loops, the bed playing in game, one-shots 16–66 m round the listener, the water loop on real water, the duck and the slider. sound_levels_test now captures every output sample (it no longer misses short sounds at low frame rates) and covers each biome's bed: audible, and never clipping even with everything at once. All tests pass. Client only.
+- 2026-10-22 — Public repo polish: marketing media rendered from the game (game/art/media_capture.gd, tools/make_media.sh → docs/media: banner, social preview, a tee shot per biome, shop outfit, multiplayer tee, celebration, drive/putt/flyover GIFs); README rebuilt around them.

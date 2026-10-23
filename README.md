@@ -1,93 +1,105 @@
-# In The Rough
+<p align="center">
+  <img src="docs/media/banner.png" alt="In The Rough" width="100%">
+</p>
 
-A first-person golf game where you swing the club with your mouse. Pull back for the backswing,
-push through for the hit, and the speed and path of your hand decide the shot: power, draw, fade,
-a duffed chip or a towering drive. Play with friends on a dedicated server, across procedurally
-generated courses in seven biomes, from a misty parkland to a lava field and the sea floor. Every
-hole you finish earns coins to spend in the golf shop on hats, shoes, ball skins, trails and
-ridiculous novelty club heads.
+<p align="center"><b>First-person golf where you swing the club with your mouse.</b><br>
+Procedural courses in seven biomes, friends on your own server, and a shop full of terrible hats.</p>
 
-Built with Godot 4.7.
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License: MIT"></a>
+  <a href="https://godotengine.org"><img src="https://img.shields.io/badge/Godot-4.7-478cbf?logo=godotengine&logoColor=white" alt="Godot 4.7"></a>
+  <img src="https://img.shields.io/badge/platforms-Windows%20%7C%20macOS-lightgrey" alt="Platforms: Windows, macOS">
+</p>
 
-![Parkland](docs/art/biome-parkland.png)
-
-| | |
-|---|---|
-| ![Magma](docs/art/biome-magma.png) | ![Underwater](docs/art/biome-underwater.png) |
-| ![Cemetery](docs/art/biome-cemetery.png) | ![The golfer](docs/art/character.png) |
-| ![Novelty club heads in the shop](docs/art/shop-clubs.png) | |
-
-<!-- TODO: swing GIF -->
-*Swing GIF coming soon.*
+<p align="center">
+  <img src="docs/media/drive.gif" alt="A first-person drive: backswing, impact, ball flight" width="640">
+</p>
 
 ## Features
 
-- **Mouse swing.** The club follows your hand on a physical swing arc; tempo and path, not a
-  timing bar, decide power and curve. 11 clubs from driver to putter, each with its own feel.
-- **Multiplayer with a dedicated server.** Server-authoritative physics, rooms of up to 8 with a
-  6-character join code (or a Steam invite), spectating, chat, scorecards and mulligans. Run your
-  own server: see [docs/hosting.md](docs/hosting.md).
-- **7 biomes.** Parkland, Oasis, Underwater, Magma, Mystic Forest, Deep Forest and Cemetery, each
-  with its own terrain, hazards, props, weather particles and ambient soundscape. Courses are
-  generated from a seed, so the same seed gives everyone the same holes.
-- **Shop and cosmetics.** Earn coins per hole and spend them on hats, shoes, ball skins, ball
-  trails and novelty club heads. Coins belong to your computer, so you can rename freely.
-- **Practice range.** A driving range with distance boards and unlimited balls, plus a sloping
-  putting green with nine cups.
-- **Single player.** Play a full round offline, no server needed.
+<table>
+  <tr>
+    <td width="50%"><img src="docs/media/drive.gif" alt="Mouse swing"><br><b>Mouse swing.</b> Pull back, push through: the speed and path of your hand set power, draw and fade. No timing bar.</td>
+    <td width="50%"><img src="docs/media/multiplayer-tee.png" alt="Three golfers on a tee"><br><b>Multiplayer.</b> Rooms of up to 8 with a 6-character code or a Steam invite, on a server-authoritative dedicated server.</td>
+  </tr>
+  <tr>
+    <td><img src="docs/media/flyover.gif" alt="Flyover of a deep forest hole"><br><b>Procedural courses.</b> Every hole is generated from a seed, the same for everyone in the room, and introduced by a flyover.</td>
+    <td><img src="docs/media/shop-outfit.png" alt="A golfer in a goose hat, flamingo shirt, plaid trousers and clown shoes"><br><b>Shop and cosmetics.</b> Earn coins every hole; spend them on hats, shoes, ball skins, trails and novelty club heads.</td>
+  </tr>
+  <tr>
+    <td><img src="docs/media/putt.gif" alt="A birdie putt dropping"><br><b>Every putt counts.</b> The cup is real physics: lip-outs, rim rides and a crowd that cheers your birdies.</td>
+    <td><img src="docs/media/celebration.png" alt="Confetti over the cup after a birdie"><br><b>Practice range and single player.</b> A driving range with distance boards and a sloping putting green, plus full rounds offline.</td>
+  </tr>
+</table>
+
+## Biomes
+
+<table>
+  <tr>
+    <td align="center"><img src="docs/media/thumbs/biome-parkland.jpg" width="150" alt=""><br>Parkland</td>
+    <td align="center"><img src="docs/media/thumbs/biome-oasis.jpg" width="150" alt=""><br>Oasis</td>
+    <td align="center"><img src="docs/media/thumbs/biome-underwater.jpg" width="150" alt=""><br>Underwater</td>
+    <td align="center"><img src="docs/media/thumbs/biome-magma.jpg" width="150" alt=""><br>Magma</td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/media/thumbs/biome-mystic-forest.jpg" width="150" alt=""><br>Mystic forest</td>
+    <td align="center"><img src="docs/media/thumbs/biome-deep-forest.jpg" width="150" alt=""><br>Deep forest</td>
+    <td align="center"><img src="docs/media/thumbs/biome-cemetery.jpg" width="150" alt=""><br>Cemetery</td>
+    <td></td>
+  </tr>
+</table>
+
+Each has its own terrain, hazards, props, weather and ambient soundscape. Full-size shots are in [docs/media](docs/media).
 
 ## Controls
 
-| Action | Input |
+| | |
 |---|---|
-| Swing | Move the mouse back (backswing), then forward through the ball |
-| Aim | Hold right mouse button and move the mouse |
-| Turn at address | A / D |
-| Walk | F to switch between walking and the shot, then W A S D and the mouse |
-| Clubs | Q (hold) for the club wheel, `[` / `]` to step, 1–0 to pick, P for the putter |
-| Re-address | R |
-| Mulligan (online) | M |
-| Next hole (offline) | N |
-| Scorecard | Hold Tab (tap to switch player while spectating) |
-| Chat | Enter |
-| Menu and settings | Esc |
-| Practice range | R re-tee, G switch range / green, C next cup, Esc back to the menu |
-| Debug overlay | F3 (H shows the hitbox) |
+| **Swing** | mouse back, then forward through the ball |
+| **Aim** | hold right mouse + move |
+| **Turn at address** | A / D |
+| **Clubs** | hold Q for the wheel · `[` `]` step · 1–0 pick · P putter |
+| **Walk** | F, then W A S D |
+| **Re-address · Mulligan · Next hole** | R · M (online) · N (offline) |
+| **Scorecard · Chat · Menu** | hold Tab · Enter · Esc |
+| **Practice range** | R re-tee · G range / green · C next cup |
 
-## Building
+## Download
 
-You need [Godot 4.7.2](https://godotengine.org/download) and its export templates
-(Editor → Manage Export Templates → Download). The project is in `game/`.
+Windows and macOS builds are on the [Releases](../../releases) page. Unzip and run. The macOS
+app is unsigned: right-click → Open the first time.
 
-**Run from the editor:** open `game/project.godot` in Godot and press F5.
+The release builds connect to `127.0.0.1` for online play, so single player and the practice range
+work anywhere, and multiplayer needs a server (below).
 
-**Windows:**
+## Build
+
+You need [Godot 4.7.2](https://godotengine.org/download) with its export templates. The project
+is in `game/`; open `game/project.godot` and press F5 to play.
 
 ```sh
 cd game
 godot --headless --export-release "Windows Desktop" build/InTheRough.exe
-```
-
-**macOS** (can be exported from any OS; the app is unsigned, so on first launch right-click →
-Open):
-
-```sh
-cd game
 godot --headless --export-release "macOS" build/mac/InTheRough.zip
 ```
 
-**Tests** are headless Godot scripts in `game/tests/`, e.g.
+Tests are headless Godot scripts in `game/tests/`, e.g.
 `godot --headless --fixed-fps 120 --path game -s res://tests/feel_regression_test.gd`.
+The media in `docs/media` is rendered by `game/art/media_capture.gd` and `tools/make_media.sh`.
 
-## Multiplayer server
+## Host your own server
 
-Online play needs a dedicated server. Out of the box the client connects to `127.0.0.1`. To
-host one (a Linux build, a systemd unit, UDP 7777, with Tailscale sharing or port forwarding),
-see **[docs/hosting.md](docs/hosting.md)**.
+The dedicated server is the same project exported for Linux: a systemd unit, UDP 7777, and
+Tailscale sharing or port forwarding. Step by step: **[docs/hosting.md](docs/hosting.md)**.
 
-## Licence
+## Credits
 
-Code and original assets: [MIT](LICENSE). Third-party libraries and sounds are listed in
-[THIRD_PARTY.md](THIRD_PARTY.md).
+- Sound effects: [Kenney](https://kenney.nl) (CC0). Ambience and comedy sounds are generated by
+  the project.
+- Steam integration: [GodotSteam](https://godotsteam.com) (MIT).
+- Built with the [Godot Engine](https://godotengine.org).
+- Full list with licences: [THIRD_PARTY.md](THIRD_PARTY.md).
+
+Code and original assets are [MIT](LICENSE).
 
 Inspired by This Is Golf.
