@@ -71,6 +71,7 @@ var _follow_offset := Vector3.ZERO # follow camera: its smoothed offset from tha
 var _follow_fresh := true # follow camera: take over from wherever the camera is
 var _spectate_shot_t := -1.0 # s into the watched player's shot; −1 between shots
 var _swung_back := false # the club has been back past the contact window since address
+var _shot_shown := 0 # the HUD's shot number: held at the shot just played until the next swing starts
 var _fp_offset := Vector3.ZERO # first person: the constant correction that puts the face on the hitbox at address
 var _fp_offset_key := [] # the address it was worked out for (club, ball, aim, eye)
 var _fp_clearance := 0.0 # first person: the face's height over the ground at address (the soft floor)
@@ -103,6 +104,8 @@ var _walk_seq := 0
 var _walk_clock := 0.0
 var _swing_sent := [] # bot: [seq, angle] it sent, for the rooms test
 var _tee_log := [] # bot: every player's tee spot per hole, for the lobby rules test
+var _hole_arrived := 0 # msec the current hole arrived from the server
+var _first_shot_s := [] # bot: per hole, s from the hole's arrival to its first shot (the rooms test: nobody waits)
 var _rig: GolferRig # the player's own golfer: arms and club in first person, whole body otherwise
 var _rig_yaw := 0.0
 
@@ -284,7 +287,7 @@ func _flyover_done() -> void:
 				_hud.pulse())
 	_swing.gesture.blocked = _wheel.visible or _menu.visible
 	if Net.online():
-		Net.flyover_done.rpc_id(1, hole_number) # the server starts the hole once everyone's is done
+		Net.my_flyover_done(hole_number) # (only the own shot clock waited for it)
 
 
 ## R: back to address — the Shooting-state reset (angle, pitch, speed state, club pose), the ball
@@ -359,7 +362,7 @@ func _ready_to_hit() -> bool:
 	if mode != Mode.SHOOTING or _swing.has_hit:
 		return false
 	if Net.online():
-		return not _awaiting_rest and score < 0 and Net.room_state == Net.RoomState.PLAYING and Net.hole_live
+		return not _awaiting_rest and score < 0 and Net.room_state == Net.RoomState.PLAYING
 	return _round.can_shoot()
 
 
@@ -662,6 +665,7 @@ func _on_net_hole(number: int, rests: Dictionary) -> void:
 	hole.wind *= RoomRules.wind_scale(Net.rules, rules) # the room's wind rule, as the server applies it
 	_swap_hole(hole, number)
 	_tee_log.append(rests.values().map(func(at: Vector3): return [at.x, at.y, at.z]))
+	_hole_arrived = Time.get_ticks_msec()
 	_puppets.hole = _hole
 	for id in rests:
 		_puppets.at_rest(id, rests[id])
@@ -740,7 +744,7 @@ func _on_round_ended() -> void:
 	if Net.bot and Net.report_path != "":
 		var f := FileAccess.open(Net.report_path, FileAccess.WRITE)
 		f.store_string(JSON.stringify({card = Net.card, balance = Net.balance, swing = {name = Net.players.get(Net.my_id, {}).get("name", ""),
-			sent = _swing_sent, seen = _puppets.swing_log}, walk = {sent = _walk_seq, seen = _puppets.walk_log}, tees = _tee_log}))
+			sent = _swing_sent, seen = _puppets.swing_log}, walk = {sent = _walk_seq, seen = _puppets.walk_log}, tees = _tee_log, first_shot_s = _first_shot_s}))
 		f.close()
 		get_tree().quit()
 
@@ -773,6 +777,8 @@ func _bot_shot() -> void:
 		dir = dir.rotated(Vector3.UP, 0.25 * _bot_repeat * (1.0 if _bot_repeat % 2 == 1 else -1.0))
 	_ball.launch(dir, 0.0, power, CLUBS[club], (-dir).cross(Vector3.UP))
 	_send_shot(dir, 0.0, power, club, 0.0)
+	if _first_shot_s.size() < hole_number:
+		_first_shot_s.append((Time.get_ticks_msec() - _hole_arrived) / 1000.0)
 	_bot_shots += 1
 	if _bot_shots == int(Boot.arg("leave-after-shots", "0")):
 		await get_tree().create_timer(0.5, false, true).timeout
@@ -986,12 +992,12 @@ func _draw_overlay(shown: Vector3) -> void:
 	_seed_field.visible = Settings.show_debug
 	_hud.visible = not Settings.show_debug
 	if not Settings.show_debug: # the player's HUD (Hud, compass, power meter); the label keeps the messages
-		_hud.show_state(strokes + (1 if score < 0 else 0), _hole.par, Vector2(pin.x, pin.z).length(),
+		_hud.show_state(_hud_shot(), _hole.par, Vector2(pin.x, pin.z).length(),
 			_swing.club.label, _wheel.carries[_club_index], _practice.status() if _practice else "")
 		_label.position.y = _hud.panel_bottom() + 10.0
 		_hud.set_coins(Net.balance if Net.online() else -1)
 		# Messages while the hole is on (penalties, shot clock…); not the finish ("Holed: 5 (E)")
-		_label.text = message if message != "" and score < 0 else ("Waiting for the others' flyovers…" if Net.online() and not Net.hole_live else "")
+		_label.text = message if message != "" and score < 0 else ""
 		if Net.online() and _ready_to_hit():
 			var clock := Net.clock_left()
 			if clock >= 0.0:
@@ -1146,6 +1152,19 @@ func _follow_through_reset() -> void:
 func _fp_face() -> Vector3:
 	var head: Node3D = _rig._club_model.get_node("Head")
 	return head.to_global(ClubModel.face_centre(_swing.club, _rig.girth_scale(), _rig.params.club_head_scale))
+
+
+## The shot number on the HUD. A shot counts at once (strokes, the server's), but the number shown
+## stays on the one just played, through its flight, the walk and the next address, until the club
+## goes back on the next swing (past stance_turn_window: the backswing has started). A finished hole
+## shows its total; a new hole, a reset or a mulligan (the count going down) shows the new number
+## at once.
+func _hud_shot() -> int:
+	var next := strokes + (1 if score < 0 else 0)
+	var backswing := _swing.angle < _swing.feel.address_angle - _swing.feel.stance_turn_window
+	if score >= 0 or _shot_shown <= 0 or next < _shot_shown or (backswing and _ready_to_hit()):
+		_shot_shown = next
+	return _shot_shown
 
 
 ## The swing rests at a slight takeaway (address_angle): show the club at address there, easing to

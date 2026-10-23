@@ -7,6 +7,9 @@ extends Node3D
 ## swing (angle and pitch, interpolated at the same render tick as the balls), snapping to the
 ## finish pose once the ball flies, gone once they have holed out. A player walking (F) streams
 ## feet and facing at walk_send_hz; their golfer walks there instead, at their pace.
+## A player who has holed out: their ball and tag go once the drop has shown (holed_hide_delay), and
+## a small faded "✓ Name" stands beside the flag instead, out of the way of the cup. Tags of balls
+## still in play fade out close to the camera (tag_fade_near), so none ever sits over a putt.
 
 const KEEP := 8 # snapshots kept per ball
 const LAUNCH_SPEED := 1.0 ## m/s: a ball at rest that goes faster than this was just hit
@@ -45,6 +48,8 @@ var novelty_sounds := {} ## club_style → stream (from main): Fresh Catch's sla
 var _looks := {} ## peer id → what they wear (their shop items over the standard look)
 var _powers := {} ## peer id → their swing's power as it looks from here (their hat's propeller)
 var _angles := {} ## peer id → their swing angle drawn last frame
+var _holed_at := {} ## peer id → s (_now) their score came in on this hole
+var _markers := {} ## peer id → their "✓ Name" beside the flag
 
 
 func _ready() -> void:
@@ -91,14 +96,21 @@ func _process(delta: float) -> void:
 				_rigs[id].queue_free()
 				_rigs.erase(id)
 			_looks.erase(id)
+			_holed_at.erase(id)
+			if _markers.has(id):
+				_markers[id].queue_free()
+				_markers.erase(id)
 			continue
 		var view := _view(id)
+		var gone := holed_out(id)
 		if id == Net.my_id:
-			view.visible = own_visible
+			view.visible = own_visible and not gone
 			view.position = own_position()
 		else:
+			view.visible = not gone
 			view.position = _at(_samples[id], render_tick, rate)
 			_pose_golfer(id, delta)
+		_fade_tag(view.get_child(1) as Label3D, view.position)
 		var skin := Ball.view_mesh_for(look_of(id)) # kept on through every snapshot, rest, drop and re-tee
 		if (view.get_child(0) as MeshInstance3D).mesh != skin:
 			(view.get_child(0) as MeshInstance3D).mesh = skin
@@ -107,6 +119,61 @@ func _process(delta: float) -> void:
 		(view.get_child(2) as BallTrail).hole = hole
 		_rendered[id] = view.position
 		_watch_launch(id, view)
+	_update_markers()
+
+
+## True once a player's hole is done (their score in) and holed_hide_delay has passed: their ball
+## and tag are hidden, their marker shows by the flag. A new hole (score back to −1) clears it.
+func holed_out(id: int) -> bool:
+	if int(Net.players.get(id, {}).get("score", -1)) < 0:
+		_holed_at.erase(id)
+		return false
+	var at: float = _holed_at.get_or_add(id, _now())
+	return _now() - at >= FEEDBACK.holed_hide_delay
+
+
+## A ball's tag: fully shown from tag_fade_near out, faded to nothing tag_fade_band closer in.
+func _fade_tag(label: Label3D, at: Vector3) -> void:
+	var camera := get_viewport().get_camera_3d() if is_inside_tree() else null
+	if camera == null:
+		return
+	var d := camera.global_position.distance_to(at)
+	var a := clampf((d - (FEEDBACK.tag_fade_near - FEEDBACK.tag_fade_band)) / FEEDBACK.tag_fade_band, 0.0, 1.0)
+	label.modulate.a = a
+	label.outline_modulate.a = a
+
+
+## "✓ Name" for each player holed out on this hole, beside the flag (to its right on screen), one
+## above the other in the order they finished; faded, and never over the cup itself.
+func _update_markers() -> void:
+	var done := _holed_at.keys().filter(func(id: int) -> bool: return holed_out(id))
+	done.sort_custom(func(a: int, b: int) -> bool: return _holed_at[a] < _holed_at[b])
+	for id in _markers.keys():
+		if not id in done:
+			_markers[id].visible = false
+	if hole == null or done.is_empty():
+		return
+	var camera := get_viewport().get_camera_3d()
+	var side := camera.global_basis.x * Vector3(1, 0, 1) if camera else Vector3.RIGHT
+	side = side.normalized() if side.length() > 0.01 else Vector3.RIGHT
+	var cup := hole.cup.global_position
+	for k in done.size():
+		var id: int = done[k]
+		var marker: Label3D = _markers.get(id)
+		if marker == null:
+			marker = Label3D.new()
+			marker.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+			marker.fixed_size = true
+			marker.pixel_size = FEEDBACK.holed_marker_pixel
+			marker.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+			marker.modulate.a = FEEDBACK.holed_marker_alpha
+			marker.outline_modulate.a = FEEDBACK.holed_marker_alpha
+			add_child(marker)
+			_markers[id] = marker
+		marker.text = "✓ " + str(Net.players[id].name)
+		marker.visible = true
+		marker.global_position = cup + side * FEEDBACK.holed_marker_side \
+			+ Vector3.UP * (FEEDBACK.holed_marker_height + k * FEEDBACK.holed_marker_spacing)
 
 
 ## A ball that was at rest and now flies: its trail starts (every club but the putter) and, for

@@ -29,3 +29,4 @@ walk_max_range = 600.0
 flyover_wait_max = 12.0
 chat_max_length = 120
 chat_min_interval = 0.4
+version_timeout = 4.0

@@ -66,6 +66,8 @@ systemctl restart golf-server
 ```
 
 Client and server must come from the same build: the network protocol changes between versions.
+The server prints its version at start (`golf server: UDP 7777, 9 holes per round, version 0.3.0+…`);
+a client on another version is told "Server is on a different version (server X, game Y)".
 
 ## 4. Let players reach it
 
@@ -82,6 +84,8 @@ Pick one:
 ## Options
 
 `--port N` (default 7777) · `--holes N` holes per round (default 9 from `net.tres`) ·
+`--profiles PATH` where players' coins and items are saved (the unit uses `/var/lib/golf/profiles.json`,
+the one folder it may write to) ·
 `--exit-when-done` quit after the first round ends · `--report PATH` write that scorecard as JSON
 (the last two are for tests). To change them, edit `ExecStart` in
 `/etc/systemd/system/golf-server.service`, then `systemctl daemon-reload && systemctl restart golf-server`.

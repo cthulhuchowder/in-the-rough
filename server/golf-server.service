@@ -9,7 +9,7 @@ User=golf
 Group=golf
 WorkingDirectory=/var/lib/golf
 Environment=HOME=/var/lib/golf
-ExecStart=/opt/golf/in-the-rough-server.x86_64 --headless --server --port 7777
+ExecStart=/opt/golf/in-the-rough-server.x86_64 --headless --server --port 7777 --profiles /var/lib/golf/profiles.json
 Restart=always
 RestartSec=2
 

@@ -102,3 +102,12 @@ extends Resource
 @export var chat_width: float ## px: the box and the log
 @export var chat_margin: float ## px from the bottom-left corner (at 1080p)
 @export var chat_blip_db: float
+@export_group("Name tags")
+@export var tag_fade_near: float ## m: another ball's name tag starts fading this close to the camera…
+@export var tag_fade_band: float ## m: …and is gone this much closer, so it never sits over a putt
+@export var holed_hide_delay: float ## s after a player holes out (their score in) before their ball and tag go: the drop shows first
+@export var holed_marker_height: float ## m above the cup: the first "✓ Name" beside the flag
+@export var holed_marker_side: float ## m to the side of the flag (screen right)
+@export var holed_marker_spacing: float ## m between markers, stacked upward in finishing order
+@export var holed_marker_alpha: float ## 0..1: faded, a note beside the flag rather than over the cup
+@export var holed_marker_pixel: float ## the marker's pixel_size (fixed size on screen; the tags use 0.0015)

@@ -44,8 +44,25 @@ func _ready() -> void:
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_disconnected.connect(on_leave)
 	multiplayer.peer_disconnected.connect(func(id: int) -> void: _key_of.erase(id))
+	(multiplayer as SceneMultiplayer).peer_packet.connect(_on_packet)
 	Net.server = self
-	print("golf server: UDP %d, %d holes per round" % [port, _holes])
+	print("golf server: UDP %d, %d holes per round, version %s" % [port, _holes, Net.version()])
+
+
+## A client's version handshake (raw packets: it works across protocol versions): answer with ours;
+## a client on a different one is told (it disconnects itself) and dropped a moment later anyway.
+func _on_packet(id: int, packet: PackedByteArray) -> void:
+	var text := packet.get_string_from_utf8()
+	if not text.begins_with(Net.VERSION_TAG):
+		return
+	var theirs := text.trim_prefix(Net.VERSION_TAG).left(64)
+	(multiplayer as SceneMultiplayer).send_bytes((Net.VERSION_TAG + Net.version()).to_utf8_buffer(), id, MultiplayerPeer.TRANSFER_MODE_RELIABLE)
+	if theirs != Net.version():
+		print("golf server: peer %d is on version %s (server %s): dropped" % [id, theirs, Net.version()])
+		await get_tree().create_timer(1.0, true, false, true).timeout
+		var enet := multiplayer.multiplayer_peer as ENetMultiplayerPeer
+		if enet and enet.get_peer(id):
+			enet.disconnect_peer(id)
 
 
 func on_create(id: int, player_name: String) -> void:

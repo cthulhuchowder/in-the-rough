@@ -49,7 +49,7 @@ func _initialize() -> void:
 	# Volumes
 	settings.change("sfx_volume", 0.5)
 	var sfx := AudioServer.get_bus_index(settings.SFX_BUS)
-	_check(sfx > 0 and is_equal_approx(AudioServer.get_bus_volume_db(sfx), linear_to_db(0.5)), "SFX volume reaches its bus")
+	_check(sfx > 0 and is_equal_approx(AudioServer.get_bus_volume_db(sfx), linear_to_db(0.5) + settings.SOUNDS.sfx_bus_db), "SFX volume reaches its bus (with the bus trim)")
 	settings.change("sfx_volume", 1.0)
 
 	# Shadow quality reaches the sun: cascades 1 / 2 / 4 for low / medium / high

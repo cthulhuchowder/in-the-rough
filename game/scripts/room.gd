@@ -25,8 +25,6 @@ var _pars: Array[int] = []
 var _scores := {} ## peer id → Array[int] per hole of this round, -1 = not played
 var _advancing := false
 var _tick := 0
-var _hole_live := false # shots accepted on this hole (everyone's flyover done, or flyover_wait_max passed)
-var _flyover_pending := {} # player ids still in this hole's flyover
 var _tee_count := 1 # players lined up across the tee at this hole's start
 var _coins := {} ## peer id → this round's coins by category (Economy)
 var _hole_log := {} ## peer id → per hole {score, picked_up, drive, drive_ok, closest, award}: what the coins came from
@@ -53,7 +51,7 @@ func add_player(id: int, player_name: String) -> bool:
 	var profile: String = get_parent().profile_key(id, player_name) # coins go to the player's key, whatever the name
 	get_parent().store.get_profile(profile).name = ProfileStore.clean_name(player_name)
 	player_name = _unique_name(player_name)
-	_players[id] = {name = player_name, profile = profile, ready = false, slot = _free_slot(), ball = null, round = null, clock = 0}
+	_players[id] = {name = player_name, profile = profile, ready = false, slot = _free_slot(), ball = null, round = null, clock = 0, clock_live = false}
 	var missed: Array[int] = []
 	missed.resize(_pars.size())
 	missed.fill(-1)
@@ -69,8 +67,7 @@ func add_player(id: int, player_name: String) -> bool:
 			_players[id].round.start(_hole, _tee_slot(_players[id].slot))
 			Net.round_started.rpc_id(id, course_seed, hole_number, _rests(), _roster(), card())
 			_each(func(m): Net.scorecard.rpc_id(m, card()))
-			if _hole_live: # joining mid-hole: no one waits for this player's flyover
-				Net.hole_go.rpc_id(id, hole_number)
+			_await_flyover(id)
 		State.ROUND_OVER:
 			Net.round_over.rpc_id(id, card())
 	print("room %s: %s joined (%d players)" % [code, player_name, _players.size()])
@@ -86,8 +83,6 @@ func remove_player(id: int) -> void:
 		p.round.queue_free()
 	_players.erase(id)
 	_scores.erase(id)
-	_flyover_pending.erase(id)
-	_maybe_go()
 	if host_id == id:
 		host_id = _players.keys()[0] if not _players.is_empty() else 0
 	print("room %s: %s left (%d players)" % [code, p.name, _players.size()])
@@ -151,14 +146,14 @@ func chat(id: int, text: String) -> void:
 ## Retake the last shot, if the rules leave this player a mulligan and the ball is at rest.
 func mulligan(id: int) -> void:
 	var p: Dictionary = _players.get(id, {})
-	if state == State.PLAYING and _hole_live and not p.is_empty() and p.round:
+	if state == State.PLAYING and not p.is_empty() and p.round:
 		p.round.mulligan()
 
 
 ## Untrusted input: clamp everything and ignore shots the rules don't allow right now.
 func shot(id: int, dir: Vector3, path_angle: float, power: float, club: int, spin: float) -> void:
 	var p: Dictionary = _players.get(id, {})
-	if state != State.PLAYING or not _hole_live or p.is_empty() or p.round == null or not p.round.can_shoot():
+	if state != State.PLAYING or p.is_empty() or p.round == null or not p.round.can_shoot():
 		return
 	dir.y = 0.0
 	if not dir.is_finite() or dir.length() < 0.01:
@@ -334,16 +329,17 @@ func _apply_rules(id: int) -> void:
 	r.gimme = float(rules.gimme)
 
 
-## Shot clock: from now (the ball at rest on a live hole) the player has shot_clock s, or the
-## server plays a whiff for them. Re-armed at every rest; a stale timer finds its token moved on.
+## Shot clock: from now (the ball at rest, this player's own flyover over) the player has shot_clock s,
+## or the server plays a whiff for them. Re-armed at every rest; a stale timer (an earlier rest or
+## hole) finds its token moved on.
 func _arm_clock(id: int) -> void:
-	if int(rules.shot_clock) <= 0 or not _hole_live or not _players.has(id):
+	if int(rules.shot_clock) <= 0 or not _players.has(id) or not _players[id].clock_live:
 		return
 	var p: Dictionary = _players[id]
 	p.clock += 1
 	var token: int = p.clock
 	get_tree().create_timer(int(rules.shot_clock), true, false, true).timeout.connect(func() -> void:
-		if state == State.PLAYING and _players.has(id) and _players[id].clock == token and _hole_live:
+		if state == State.PLAYING and _players.has(id) and _players[id].clock == token:
 			_players[id].round.whiff())
 
 
@@ -358,7 +354,6 @@ func _load_hole(number: int) -> void:
 	_hole.wind *= RoomRules.wind_scale(rules, _rules)
 	add_child(_hole)
 	_pars.append(entry.par)
-	_hole_live = false
 	var order := 0
 	for id in _players: # tee spots in join order, centred across the tee
 		_scores[id].append(-1)
@@ -374,37 +369,34 @@ func _load_hole(number: int) -> void:
 		_each(func(m): Net.start_hole.rpc_id(m, number, rests))
 	for id in _players:
 		_players[id].round.start(_hole, _tee_slot(_players[id].slot))
-	# Shots wait until everyone has watched (or skipped) the hole flyover, at most flyover_wait_max.
-	_flyover_pending.clear()
 	for id in _players:
-		_flyover_pending[id] = true
-	var number_now := number
+		_await_flyover(id)
+
+
+## Each player's hole is on from the moment it spawns: shots count at once, nobody waits for anyone.
+## Their flyover only holds back their own shot clock, until they say it is over (flyover_done)
+## or flyover_wait_max passes, so a late or lost message costs at most a late clock, never a shot.
+func _await_flyover(id: int) -> void:
+	_players[id].clock_live = false
+	_players[id].clock += 1 # (the last hole's clock, if still running, is stale now)
+	var number_now := hole_number
 	get_tree().create_timer(Net.PARAMS.flyover_wait_max, true, false, true).timeout.connect(func() -> void:
 		if hole_number == number_now:
-			_go())
+			_clock_on(id))
 
 
-## A player finished or skipped hole `number`'s flyover.
+## A player finished or skipped hole `number`'s flyover (an earlier hole's arrives late: ignored).
 func flyover_done(id: int, number: int) -> void:
 	if number == hole_number:
-		_flyover_pending.erase(id)
-		_maybe_go()
+		_clock_on(id)
 
 
-func _maybe_go() -> void:
-	if state == State.PLAYING and not _hole_live and _flyover_pending.is_empty():
-		_go()
-
-
-## The hole is on: shots count from now.
-func _go() -> void:
-	if _hole_live:
+func _clock_on(id: int) -> void:
+	if state != State.PLAYING or not _players.has(id) or _players[id].clock_live:
 		return
-	_hole_live = true
-	_each(func(m): Net.hole_go.rpc_id(m, hole_number))
-	for id in _players:
-		if _players[id].round.can_shoot():
-			_arm_clock(id)
+	_players[id].clock_live = true
+	if _players[id].round.can_shoot():
+		_arm_clock(id)
 
 
 func _on_finished(score: int, id: int) -> void:

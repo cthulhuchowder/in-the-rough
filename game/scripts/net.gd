@@ -8,6 +8,10 @@ extends Node
 
 signal connected ## to the server; a room comes next
 signal connection_failed(reason: String)
+
+## The version handshake: raw packets, not RPCs, so it still works when the two builds' RPC sets
+## differ (then Godot drops every Net RPC between them, silently).
+const VERSION_TAG := "ITR-VERSION:"
 signal room_failed(reason: String)
 signal lobby_changed
 signal round_began
@@ -43,7 +47,7 @@ var players := {} ## peer id → {name, strokes, score, message, mulligans}
 var card := {} ## {pars, rows: [{id, name, scores}]}, -1 = not played
 var bot := false
 var local := false ## this room is a single player's, on a server inside this game (no network)
-var hole_live := false ## this hole's shots count (the server says so once everyone's flyover is done)
+var clock_live := false ## the own shot clock runs (this client's own flyover of the hole is over)
 var rules := {} ## the room's custom rules (RoomRules), from the server
 var clock_ends := 0.0 ## s (ticks clock) the own shot clock runs out; 0 = none running
 var report_path := ""
@@ -76,10 +80,7 @@ func connect_to_server(to_address := "", to_port := 0) -> void:
 		connection_failed.emit("Could not start networking: %s" % error_string(err))
 		return
 	multiplayer.multiplayer_peer = peer
-	multiplayer.connected_to_server.connect(func():
-		_synced = false
-		_send_offline() # (first: the server knows whose coins these are, and adds in what is owed, before any room or shop request)
-		connected.emit(), CONNECT_ONE_SHOT)
+	multiplayer.connected_to_server.connect(_check_version, CONNECT_ONE_SHOT)
 	multiplayer.connection_failed.connect(func():
 		multiplayer.multiplayer_peer = null
 		connection_failed.emit("Can't reach the game server"), CONNECT_ONE_SHOT)
@@ -87,6 +88,61 @@ func connect_to_server(to_address := "", to_port := 0) -> void:
 		_clear_room()
 		multiplayer.multiplayer_peer = null
 		connection_failed.emit("Lost connection to the game server"), CONNECT_ONE_SHOT)
+
+
+## Connected: first the versions are compared (our version to the server, its back). The same: on
+## as before. Different, or no answer within version_timeout (a server from before the handshake):
+## disconnect and say so, rather than every request after it vanishing.
+func _check_version() -> void:
+	var scene := multiplayer as SceneMultiplayer
+	var answered := [false]
+	var on_packet := func(from: int, packet: PackedByteArray) -> void:
+		var text := packet.get_string_from_utf8()
+		if from != 1 or answered[0] or not text.begins_with(VERSION_TAG):
+			return
+		answered[0] = true
+		_version_answer(text.trim_prefix(VERSION_TAG))
+	scene.peer_packet.connect(on_packet)
+	scene.send_bytes((VERSION_TAG + version()).to_utf8_buffer(), 1, MultiplayerPeer.TRANSFER_MODE_RELIABLE)
+	await get_tree().create_timer(PARAMS.version_timeout, true, false, true).timeout
+	scene.peer_packet.disconnect(on_packet)
+	if not answered[0] and is_connected_to_server():
+		_version_answer("older")
+
+
+func _version_answer(server_version: String) -> void:
+	if server_version != version():
+		multiplayer.multiplayer_peer.close()
+		multiplayer.multiplayer_peer = null
+		connection_failed.emit(version_mismatch(server_version, version()))
+		return
+	_synced = false
+	_send_offline() # (first: the server knows whose coins these are, and adds in what is owed, before any room or shop request)
+	connected.emit()
+
+
+## What the menu says when the server and this game differ.
+static func version_mismatch(server_version: String, game_version: String) -> String:
+	return "Server is on a different version (server %s, game %s)" % [server_version, game_version]
+
+
+## This build's network version: the game's config/version and a hash of Net's RPC set (each RPC's
+## name, mode, channel and argument count), so any protocol change shows even under the same version
+## number. --fake-version VALUE stands in for it (tests).
+func version() -> String:
+	var fake := Boot.arg("fake-version")
+	if fake != "":
+		return fake
+	var rpcs: Dictionary = get_script().get_rpc_config()
+	var args := {}
+	for m in get_script().get_script_method_list():
+		args[m.name] = m.args.size()
+	var names := rpcs.keys().map(func(n: StringName) -> String: return str(n)) # (StringNames sort by address, not by name)
+	names.sort()
+	var signature := ""
+	for n in names:
+		signature += "%s/%s/%d;" % [n, JSON.stringify(rpcs[StringName(n)], "", true), args.get(StringName(n), -1)]
+	return "%s+%s" % [ProjectSettings.get_setting("application/config/version", "?"), signature.md5_text().substr(0, 6)]
 
 
 func leave() -> void:
@@ -319,7 +375,7 @@ func round_started(seed: int, number: int, rest_positions: Dictionary, roster: D
 	players = roster
 	card = scores
 	room_state = RoomState.PLAYING
-	hole_live = false
+	clock_live = false
 	round_began.emit()
 
 
@@ -327,19 +383,22 @@ func round_started(seed: int, number: int, rest_positions: Dictionary, roster: D
 func start_hole(number: int, rest_positions: Dictionary) -> void:
 	hole_number = number
 	rests = rest_positions
-	hole_live = false
+	clock_live = false
 	hole_started.emit(number, rest_positions)
 
 
-## Every player has finished or skipped the flyover (or the wait ran out): shots count now.
-@rpc("authority", "call_local", "reliable")
-func hole_go(number: int) -> void:
-	if number == hole_number:
-		hole_live = true
-		_start_clock()
+## This client's own flyover of hole `number` is over (finished or skipped): its shot clock starts
+## here and on the server. Nothing else waits on it, here or for anyone else.
+func my_flyover_done(number: int) -> void:
+	if number != hole_number or clock_live:
+		return
+	clock_live = true
+	_start_clock()
+	if not Boot.flag("no-flyover-ready"): # (test bot: the message lost)
+		flyover_done.rpc_id(1, number)
 
 
-## This client finished or skipped hole `number`'s flyover.
+## A client finished or skipped hole `number`'s flyover: its shot clock may start.
 @rpc("any_peer", "call_local", "reliable")
 func flyover_done(number: int) -> void:
 	if server:
@@ -348,7 +407,7 @@ func flyover_done(number: int) -> void:
 
 @rpc("authority", "call_local", "reliable")
 func at_rest(id: int, position: Vector3) -> void:
-	if id == my_id and hole_live:
+	if id == my_id and clock_live:
 		_start_clock()
 	ball_at_rest.emit(id, position)
 

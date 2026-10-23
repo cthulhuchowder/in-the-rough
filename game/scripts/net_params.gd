@@ -24,6 +24,7 @@ extends Resource
 @export var walk_send_hz: float ## own position and facing to the room while walking
 @export var walk_timeout: float ## s without a walk sample before a remote golfer goes back to address
 @export var walk_max_range: float ## m from their own ball the server accepts a walk pose
-@export var flyover_wait_max: float ## s the server waits for every player's hole flyover before shots count
+@export var flyover_wait_max: float ## s after a hole starts that a player's shot clock runs even if their flyover-done never arrived (shots never wait)
 @export var chat_max_length: int ## characters in one chat line (the server trims)
 @export var chat_min_interval: float ## s between one player's chat lines (faster ones are dropped)
+@export var version_timeout: float ## s a client waits for the server's version reply before calling it a different (older) version
