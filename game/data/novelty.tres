@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="NoveltyParams" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/novelty_params.gd" id="1_nv"]
+
+[resource]
+script = ExtResource("1_nv")
+green_radius = 0.62
+green_ball = 0.09
+green_gain = 0.9
+green_accel_max = 30.0
+green_friction = 1.6
+green_sunk_time = 8.0
+goose_size = 0.9
+goose_turn = 0.9
+goose_look_every = 2.6
+goose_blink_every = 3.5
+goose_blink = 0.07
+goose_honk_time = 0.6
+beanie_fit = 1.08
+propeller_idle = 1.2
+propeller_max = 45.0
+propeller_ease = 5.0
+sputter_time = 1.6
+remote_power_rate = 9.0
+flop_time = 0.7
+flop_angle = 0.9
+beak_power = 0.8
+slap_volume_db = Vector2(-14, -2)
+slap_pitch = Vector2(1.15, 0.85)
+squeak_volume_db = Vector2(-16, -2)
+squeak_pitch = Vector2(0.8, 1.45)
+shoe_slap_volume_db = -12.0
+sparkle_speed = 0.3
+eye_turn_rate = 5.0

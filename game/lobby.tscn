@@ -1,0 +1,231 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/lobby.gd" id="1_lobby"]
+
+[node name="Lobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lobby")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.16, 0.3, 0.18, 1)
+
+[node name="Entry" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 56.0
+offset_top = -170.0
+offset_right = 720.0
+offset_bottom = 170.0
+grow_vertical = 2
+theme_override_constants/separation = 18
+
+[node name="Column" type="VBoxContainer" parent="Entry"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Play" type="Button" parent="Entry/Column"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 54)
+layout_mode = 2
+text = "Play"
+
+[node name="Practice" type="Button" parent="Entry/Column"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 54)
+layout_mode = 2
+text = "Practice"
+
+[node name="Shop" type="Button" parent="Entry/Column"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 54)
+layout_mode = 2
+text = "Shop"
+
+[node name="Settings" type="Button" parent="Entry/Column"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 54)
+layout_mode = 2
+text = "Settings"
+
+[node name="Quit" type="Button" parent="Entry/Column"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 54)
+layout_mode = 2
+text = "Quit"
+
+[node name="PlayPanel" type="PanelContainer" parent="Entry"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Rows" type="VBoxContainer" parent="Entry/PlayPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Offline" type="Button" parent="Entry/PlayPanel/Rows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 48)
+layout_mode = 2
+text = "Single player"
+
+[node name="Host" type="Button" parent="Entry/PlayPanel/Rows"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 48)
+layout_mode = 2
+text = "Host a room"
+
+[node name="JoinRow" type="HBoxContainer" parent="Entry/PlayPanel/Rows"]
+layout_mode = 2
+
+[node name="Code" type="LineEdit" parent="Entry/PlayPanel/Rows/JoinRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Room code"
+max_length = 6
+
+[node name="Join" type="Button" parent="Entry/PlayPanel/Rows/JoinRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 48)
+layout_mode = 2
+text = "Join with code"
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Form" type="VBoxContainer" parent="Center"]
+custom_minimum_size = Vector2(340, 0)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Room" type="VBoxContainer" parent="Center/Form"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="RoomTitle" type="Label" parent="Center/Form/Room"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 1
+
+[node name="Hint" type="Label" parent="Center/Form/Room"]
+layout_mode = 2
+text = "Share the code so friends can join"
+horizontal_alignment = 1
+
+[node name="Players" type="VBoxContainer" parent="Center/Form/Room"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Ready" type="CheckButton" parent="Center/Form/Room"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Ready"
+
+[node name="Start" type="Button" parent="Center/Form/Room"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Start (everyone ready)"
+
+[node name="Invite" type="Button" parent="Center/Form/Room"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Invite Steam friends"
+
+[node name="Leave" type="Button" parent="Center/Form/Room"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Leave room"
+
+[node name="Status" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -360.0
+offset_top = -70.0
+offset_right = 360.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Profile" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 324.0
+offset_bottom = 72.0
+
+[node name="Row" type="HBoxContainer" parent="Profile"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="NameShown" type="Button" parent="Profile/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Click to change your name"
+flat = true
+text = "Player"
+alignment = 0
+
+[node name="Name" type="LineEdit" parent="Profile/Row"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(170, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Player"
+max_length = 24
+
+[node name="Coins" type="Label" parent="Profile/Row"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+[node name="Version" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_top = -40.0
+offset_right = -20.0
+offset_bottom = -14.0
+grow_horizontal = 0
+grow_vertical = 0
+horizontal_alignment = 2

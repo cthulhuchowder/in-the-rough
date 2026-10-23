@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://art/art_preset.gd" id="1_preset"]
+
+[sub_resource type="ProceduralSkyMaterial" id="Sky_mat"]
+sky_top_color = Color(0.1804, 0.5451, 1.0000, 1)
+sky_horizon_color = Color(0.6235, 0.8471, 1.0000, 1)
+ground_bottom_color = Color(0.4314, 0.6078, 0.2902, 1)
+ground_horizon_color = Color(0.6549, 0.8510, 0.4941, 1)
+sun_angle_max = 20.0
+
+[sub_resource type="Sky" id="Sky_res"]
+sky_material = SubResource("Sky_mat")
+
+[sub_resource type="Environment" id="Env"]
+background_mode = 2
+sky = SubResource("Sky_res")
+ambient_light_source = 3
+ambient_light_energy = 0.35
+tonemap_mode = 0
+fog_enabled = true
+fog_light_color = Color(0.7490, 0.9020, 1.0000, 1)
+fog_density = 0.0006
+fog_sky_affect = 0.4
+
+[node name="CartoonMidday" type="Node3D"]
+script = ExtResource("1_preset")
+fairway = Color(0.2980, 0.7882, 0.2902, 1)
+rough = Color(0.1804, 0.6196, 0.2275, 1)
+green = Color(0.4863, 0.9412, 0.4157, 1)
+sand = Color(1.0000, 0.8784, 0.4784, 1)
+water = Color(0.1216, 0.6549, 1.0000, 1)
+out_of_bounds = Color(0.5412, 0.4314, 0.2431, 1)
+tee = Color(0.3529, 0.8588, 0.3333, 1)
+water_alpha = 0.9
+face_jitter = 0.06
+trunk = Color(0.4784, 0.2902, 0.1333, 1)
+canopy = Color(0.1176, 0.5608, 0.2275, 1)
+canopy_alt = Color(0.2039, 0.6980, 0.2902, 1)
+shirt = Color(1.0000, 0.2941, 0.2941, 1)
+pants = Color(0.1451, 0.2745, 0.7882, 1)
+skin = Color(1.0000, 0.7843, 0.5882, 1)
+cap = Color(1.0000, 0.8235, 0.1216, 1)
+club = Color(0.8784, 0.8784, 0.8784, 1)
+flag = Color(1.0000, 0.1804, 0.1804, 1)
+pole = Color(1.0000, 1.0000, 1.0000, 1)
+cup = Color(0.1020, 0.1020, 0.1020, 1)
+ball = Color(1.0000, 1.0000, 1.0000, 1)
+
+[node name="Environment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+rotation_degrees = Vector3(-65, 35, 0)
+light_color = Color(1.0000, 0.9647, 0.8784, 1)
+light_energy = 2.2
+light_angular_distance = 0.5
+shadow_enabled = true
+shadow_opacity = 1.0
+shadow_blur = 1.0
+directional_shadow_max_distance = 250.0

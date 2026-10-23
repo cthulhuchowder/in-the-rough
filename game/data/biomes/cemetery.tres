@@ -1,0 +1,77 @@
+[gd_resource type="Resource" script_class="Biome" format=3]
+
+[ext_resource type="Script" path="res://scripts/prop_kind.gd" id="1_pk"]
+[ext_resource type="Script" path="res://scripts/biome.gd" id="2_biome"]
+[ext_resource type="Resource" path="res://data/props/gnarled_tree.tres" id="3_gnarled"]
+[ext_resource type="Resource" path="res://data/props/mausoleum.tres" id="4_mausoleum"]
+[ext_resource type="Resource" path="res://data/props/gravestone.tres" id="5_grave"]
+[ext_resource type="Resource" path="res://data/props/iron_fence.tres" id="6_fence"]
+[ext_resource type="Resource" path="res://data/props/dead_bush.tres" id="7_bush"]
+[ext_resource type="Resource" path="res://data/props/pumpkin.tres" id="8_pumpkin"]
+[ext_resource type="Resource" path="res://data/props/jack_o_lantern.tres" id="9_jack"]
+
+[ext_resource type="Resource" path="res://data/soundscapes/cemetery.tres" id="soundscape"]
+
+[resource]
+script = ExtResource("2_biome")
+soundscape = ExtResource("soundscape")
+name = "cemetery"
+display_name = "Cemetery"
+card_color = Color(0.72, 0.8, 0.88, 1)
+fairway_color = Color(0.46, 0.53, 0.47, 1)
+rough_color = Color(0.3, 0.36, 0.31, 1)
+green_color = Color(0.52, 0.6, 0.52, 1)
+sand_color = Color(0.52, 0.5, 0.45, 1)
+sky_top = Color(0.12, 0.14, 0.24, 1)
+sky_horizon = Color(0.46, 0.48, 0.58, 1)
+ground_horizon = Color(0.22, 0.24, 0.28, 1)
+ground_bottom = Color(0.1, 0.1, 0.12, 1)
+fog_color = Color(0.5, 0.55, 0.64, 1)
+fog_density = 0.0008
+fog_height_density = 0.09
+fog_height = 2.5
+sun_rotation = Vector2(11, 210)
+sun_color = Color(0.72, 0.8, 1, 1)
+sun_energy = 0.8
+ambient = 4
+sun_bloom = 0.18
+sun_bloom_color = Color(0.7, 0.8, 1, 1)
+water_name = "bog"
+water_color = Color(0.1, 0.14, 0.08, 1)
+water_alpha = 0.94
+water_bubbles = 26
+crows = 4
+relief_amp = 0.55
+relief_freq = 1.2
+pits = Vector2i(1, 2)
+pit_radius = 10.0
+trees = Array[ExtResource("1_pk")]([ExtResource("3_gnarled"), ExtResource("4_mausoleum")])
+groves_per_km2 = 150.0
+grove_size = Vector2i(2, 6)
+grove_radius = 14.0
+grove_gap = 50.0
+tree_line_step = 14.0
+tree_line_offset = Vector2(10, 25)
+tree_line_gaps = 0.55
+landmark_chance = 0.05
+landmark_scale = 1.8
+landmark_radius = 45.0
+landmark_bend_deg = 12.0
+formation_count = Vector2i(1, 3)
+formation_offset = Vector2(10, 22)
+formation_spacing = 60.0
+fence_offset = Vector2(4, 8)
+fence_gaps = 0.4
+forest_inset = 5.0
+forest_density = 4.2
+forest_depth = 30.0
+forest_grove_radius = 10.0
+forest_tree_scale = 1.2
+forest_bushes_per_km2 = 500.0
+props = Array[ExtResource("1_pk")]([ExtResource("5_grave"), ExtResource("6_fence"), ExtResource("7_bush"), ExtResource("8_pumpkin"), ExtResource("9_jack")])
+prop_min_spacing = 2.0
+tufts_per_m2 = 0.3
+tuft_color = Color(0.3, 0.36, 0.3, 1)
+oob_color = Color(0.18, 0.2, 0.19, 1)
+oob_pattern = 4
+ob_fog_bands = 16

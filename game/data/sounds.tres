@@ -1,0 +1,55 @@
+[gd_resource type="Resource" script_class="SoundParams" load_steps=21 format=3]
+
+[ext_resource type="Script" path="res://scripts/sound_params.gd" id="1_snd"]
+[ext_resource type="AudioStream" path="res://audio/club_driver.ogg" id="2"]
+[ext_resource type="AudioStream" path="res://audio/club_iron.ogg" id="3"]
+[ext_resource type="AudioStream" path="res://audio/club_wedge.ogg" id="4"]
+[ext_resource type="AudioStream" path="res://audio/putter_tock.ogg" id="5"]
+[ext_resource type="AudioStream" path="res://audio/land_fairway.ogg" id="6"]
+[ext_resource type="AudioStream" path="res://audio/land_rough.ogg" id="7"]
+[ext_resource type="AudioStream" path="res://audio/land_sand.ogg" id="8"]
+[ext_resource type="AudioStream" path="res://audio/hit_tree.ogg" id="9"]
+[ext_resource type="AudioStream" path="res://audio/hit_stone.ogg" id="10"]
+[ext_resource type="AudioStream" path="res://audio/cup_rattle.ogg" id="11"]
+[ext_resource type="AudioStream" path="res://audio/cup_drop.ogg" id="12"]
+[ext_resource type="AudioStream" path="res://audio/ui_hover.ogg" id="13"]
+[ext_resource type="AudioStream" path="res://audio/ui_click.ogg" id="14"]
+[ext_resource type="AudioStream" path="res://audio/ui_back.ogg" id="15"]
+[ext_resource type="AudioStream" path="res://audio/shop_buy.ogg" id="16"]
+[ext_resource type="AudioStream" path="res://audio/shop_equip.ogg" id="17"]
+[ext_resource type="AudioStream" path="res://audio/coin_clink.ogg" id="18"]
+[ext_resource type="AudioStream" path="res://audio/chat_blip.ogg" id="19"]
+[ext_resource type="AudioStream" path="res://audio/scorecard_pop.ogg" id="20"]
+
+[resource]
+script = ExtResource("1_snd")
+club_driver = ExtResource("2")
+club_iron = ExtResource("3")
+club_wedge = ExtResource("4")
+putter = ExtResource("5")
+land_fairway = ExtResource("6")
+land_rough = ExtResource("7")
+land_sand = ExtResource("8")
+hit_tree = ExtResource("9")
+hit_stone = ExtResource("10")
+cup_rattle = ExtResource("11")
+cup_drop = ExtResource("12")
+land_db = Vector2(-22, -6)
+land_speeds = Vector2(1, 12)
+cup_db = -6.0
+rattle_gap = 0.12
+ball_unit_size = 12.0
+ui_hover = ExtResource("13")
+ui_click = ExtResource("14")
+ui_back = ExtResource("15")
+shop_buy = ExtResource("16")
+shop_equip = ExtResource("17")
+coin = ExtResource("18")
+chat = ExtResource("19")
+scorecard = ExtResource("20")
+ui_db = -12.0
+shop_db = -8.0
+scorecard_db = -10.0
+sfx_bus_db = -3.0
+clubs_bus_db = -2.0
+limiter_ceiling_db = -1.0

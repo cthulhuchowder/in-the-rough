@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="ClubData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/club_data.gd" id="1_club"]
+
+[resource]
+script = ExtResource("1_club")
+label = "D"
+display_name = "Driver"
+strength = 90.0
+loft_deg = 8.0
+smash = 1.5
+power_mul = 1.0
+curve_mul = 1.0
+backspin = 0.0
+lift = 0.00208
+stance_dist = 1.3
+camera_back = 0.0
+hitbox_gain = Vector2(2.7, 2.7)
+hitbox_late_offset = 0.0
+hitbox_offset = Vector3(-0.02, 0.03, 0.03)
+hitbox_scale = Vector3(1, 0.3, 0.75)
+hand_angle = 0.13
+fp_contact_offset = 0.0366
+fp_shaft_lean = 0.053
+fp_shaft_forward_lean = 0.157
+model = 0
+shaft_length = 1.15
+grip_length = 0.27
+head_size = Vector3(0.115, 0.06, 0.105)
+lie_deg = 58
+carry_fairway = 217.8
+carry_rough = 217.8
+carry_sand = 217.8

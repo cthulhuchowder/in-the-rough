@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="SoundscapeSet" format=3]
+
+[ext_resource type="Script" path="res://scripts/soundscape_set.gd" id="set"]
+[ext_resource type="Script" path="res://scripts/soundscape_shot.gd" id="shot"]
+[ext_resource type="AudioStream" path="res://audio/ambience/deep_forest/base_canopy_wind.wav" id="base"]
+[ext_resource type="AudioStream" path="res://audio/ambience/deep_forest/water_lapping.wav" id="water"]
+[ext_resource type="AudioStream" path="res://audio/ambience/deep_forest/trunk_creak.wav" id="trunk_creak_0"]
+[ext_resource type="AudioStream" path="res://audio/ambience/deep_forest/woodpecker.wav" id="woodpecker_1"]
+[ext_resource type="AudioStream" path="res://audio/ambience/deep_forest/distant_owl.wav" id="distant_owl_2"]
+
+[sub_resource type="Resource" id="shot_0"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("trunk_creak_0")])
+interval = Vector2(10.0, 25.0)
+distance = Vector2(15.0, 40.0)
+height = Vector2(2.0, 8.0)
+volume_db = -8.0
+pitch = Vector2(0.85000002384186, 1.14999997615814)
+
+[sub_resource type="Resource" id="shot_1"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("woodpecker_1")])
+interval = Vector2(14.0, 35.0)
+distance = Vector2(30.0, 70.0)
+height = Vector2(4.0, 12.0)
+volume_db = -8.0
+pitch = Vector2(0.9200000166893, 1.08000004291534)
+
+[sub_resource type="Resource" id="shot_2"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("distant_owl_2")])
+interval = Vector2(25.0, 60.0)
+distance = Vector2(60.0, 120.0)
+height = Vector2(6.0, 15.0)
+volume_db = -8.0
+pitch = Vector2(0.94999998807907, 1.04999995231628)
+
+[resource]
+script = ExtResource("set")
+base = ExtResource("base")
+base_db = -13.0
+water = ExtResource("water")
+water_db = -11.0
+shots = Array[SoundscapeShot]([SubResource("shot_0"), SubResource("shot_1"), SubResource("shot_2")])

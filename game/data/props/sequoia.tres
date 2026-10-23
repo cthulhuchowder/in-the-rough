@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PropKind" format=3]
+
+[ext_resource type="Script" path="res://scripts/prop_kind.gd" id="1_don2f"]
+
+[resource]
+script = ExtResource("1_don2f")
+shape = 21
+sizes = Array[Vector2]([Vector2(7, 2.6), Vector2(9, 3), Vector2(11, 3.4)])
+trunk_radius = 1.45
+color = Color(0.24, 0.36, 0.24, 1)
+trunk_color = Color(0.78, 0.66, 0.56, 1)
+hue_jitter = 0.02
+value_jitter = 0.05
+height_range = Vector2(1, 1.7)
+width_range = Vector2(0.85, 1.2)
+trunk_range = Vector2(0.9, 1.4)

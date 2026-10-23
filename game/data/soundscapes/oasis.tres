@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="SoundscapeSet" format=3]
+
+[ext_resource type="Script" path="res://scripts/soundscape_set.gd" id="set"]
+[ext_resource type="Script" path="res://scripts/soundscape_shot.gd" id="shot"]
+[ext_resource type="AudioStream" path="res://audio/ambience/oasis/base_hot_wind.wav" id="base"]
+[ext_resource type="AudioStream" path="res://audio/ambience/oasis/water_lapping.wav" id="water"]
+[ext_resource type="AudioStream" path="res://audio/ambience/oasis/gust.wav" id="gust_0"]
+[ext_resource type="AudioStream" path="res://audio/ambience/oasis/cicadas.wav" id="cicadas_1"]
+[ext_resource type="AudioStream" path="res://audio/ambience/oasis/hawk_cry.wav" id="hawk_cry_2"]
+
+[sub_resource type="Resource" id="shot_0"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("gust_0")])
+interval = Vector2(6.0, 14.0)
+distance = Vector2(10.0, 25.0)
+height = Vector2(1.0, 4.0)
+volume_db = -8.0
+pitch = Vector2(0.85000002384186, 1.14999997615814)
+
+[sub_resource type="Resource" id="shot_1"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("cicadas_1")])
+interval = Vector2(4.0, 10.0)
+distance = Vector2(15.0, 40.0)
+height = Vector2(1.0, 5.0)
+volume_db = -10.0
+pitch = Vector2(0.94999998807907, 1.04999995231628)
+
+[sub_resource type="Resource" id="shot_2"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("hawk_cry_2")])
+interval = Vector2(25.0, 60.0)
+distance = Vector2(50.0, 100.0)
+height = Vector2(25.0, 50.0)
+volume_db = -6.0
+pitch = Vector2(0.9200000166893, 1.05999994277954)
+
+[resource]
+script = ExtResource("set")
+base = ExtResource("base")
+base_db = -13.0
+water = ExtResource("water")
+water_db = -12.0
+shots = Array[SoundscapeShot]([SubResource("shot_0"), SubResource("shot_1"), SubResource("shot_2")])

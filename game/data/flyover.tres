@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="FlyoverParams" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/flyover_params.gd" id="1_fly"]
+
+[resource]
+script = ExtResource("1_fly")
+duration = 8.0
+back = 40.0
+height = 30.0
+path_spacing = 30.0
+orbit_radius = 25.0
+orbit_height = 20.0
+orbit_degrees = 180.0
+orbit_blend = 90.0
+lookahead = 60.0
+look_height = 0.0
+pin_blend = 1.5
+hud_fade = 0.5
+card_fade = 0.4
+card_margin = 28.0
+card_font = 26
+hold_fade = 0.4
+hold_budget_ms = 150.0
+loading_pulse = Vector2(0.45, 0.9)
+loading_pulse_time = 1.2

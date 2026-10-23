@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PropKind" format=3]
+
+[ext_resource type="Script" path="res://scripts/prop_kind.gd" id="1_qbjaa"]
+
+[resource]
+script = ExtResource("1_qbjaa")
+shape = 22
+sizes = Array[Vector2]([Vector2(0, 0.45), Vector2(0, 0.65), Vector2(0, 0.85)])
+color = Color(0.3, 0.46, 0.26, 1)
+hue_jitter = 0.02
+value_jitter = 0.05
+per_km2 = 260.0
+height_range = Vector2(0.8, 1.25)
+width_range = Vector2(0.85, 1.2)
+trunk_range = Vector2(0.85, 1.2)

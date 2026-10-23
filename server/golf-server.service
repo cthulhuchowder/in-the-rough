@@ -1,0 +1,24 @@
+[Unit]
+Description=Golf dedicated server (UDP 7777)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=golf
+Group=golf
+WorkingDirectory=/var/lib/golf
+Environment=HOME=/var/lib/golf
+ExecStart=/opt/golf/in-the-rough-server.x86_64 --headless --server --port 7777
+Restart=always
+RestartSec=2
+
+# Hardening: the server only needs its own home for Godot's logs.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/golf
+
+[Install]
+WantedBy=multi-user.target

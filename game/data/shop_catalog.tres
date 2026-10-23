@@ -1,0 +1,252 @@
+[gd_resource type="Resource" script_class="ShopCatalog" load_steps=31 format=3]
+
+[ext_resource type="Script" path="res://scripts/shop_catalog.gd" id="1_cat"]
+[ext_resource type="Script" path="res://scripts/shop_item.gd" id="2_item"]
+
+[sub_resource type="Resource" id="hat_bucket"]
+script = ExtResource("2_item")
+id = "hat_bucket"
+tab = 0
+title = "Bucket hat"
+price = 120
+color = Color(0.36, 0.48, 0.36, 1)
+style = 1
+
+[sub_resource type="Resource" id="hat_flat"]
+script = ExtResource("2_item")
+id = "hat_flat"
+tab = 0
+title = "Flat cap"
+price = 150
+color = Color(0.45, 0.36, 0.28, 1)
+style = 2
+
+[sub_resource type="Resource" id="shirt_mint"]
+script = ExtResource("2_item")
+id = "shirt_mint"
+tab = 1
+title = "Mint polo"
+price = 80
+color = Color(0.55, 0.78, 0.66, 1)
+
+[sub_resource type="Resource" id="shirt_navy"]
+script = ExtResource("2_item")
+id = "shirt_navy"
+tab = 1
+title = "Navy polo"
+price = 80
+color = Color(0.2, 0.27, 0.42, 1)
+
+[sub_resource type="Resource" id="pants_khaki"]
+script = ExtResource("2_item")
+id = "pants_khaki"
+tab = 2
+title = "Khaki slacks"
+price = 70
+color = Color(0.72, 0.64, 0.48, 1)
+
+[sub_resource type="Resource" id="pants_white"]
+script = ExtResource("2_item")
+id = "pants_white"
+tab = 2
+title = "Tour whites"
+price = 110
+color = Color(0.88, 0.87, 0.83, 1)
+
+[sub_resource type="Resource" id="shoes_white"]
+script = ExtResource("2_item")
+id = "shoes_white"
+tab = 3
+title = "White spikes"
+price = 60
+color = Color(0.92, 0.92, 0.9, 1)
+
+[sub_resource type="Resource" id="shoes_brogue"]
+script = ExtResource("2_item")
+id = "shoes_brogue"
+tab = 3
+title = "Brogues"
+price = 90
+color = Color(0.42, 0.27, 0.18, 1)
+
+[sub_resource type="Resource" id="ball_hivis"]
+script = ExtResource("2_item")
+id = "ball_hivis"
+tab = 4
+title = "Hi-vis ball"
+price = 40
+color = Color(1, 0.55, 0.15, 1)
+
+[sub_resource type="Resource" id="ball_stripe"]
+script = ExtResource("2_item")
+id = "ball_stripe"
+tab = 4
+title = "Tour stripe"
+price = 100
+color = Color(0.95, 0.95, 0.94, 1)
+accent = Color(0.2, 0.42, 0.78, 1)
+style = 1
+
+[sub_resource type="Resource" id="club_gold"]
+script = ExtResource("2_item")
+id = "club_gold"
+tab = 5
+title = "Gold set"
+price = 200
+color = Color(0.85, 0.68, 0.3, 1)
+
+[sub_resource type="Resource" id="club_black"]
+script = ExtResource("2_item")
+id = "club_black"
+tab = 5
+title = "Black chrome"
+price = 160
+color = Color(0.16, 0.16, 0.18, 1)
+
+[sub_resource type="Resource" id="hat_green"]
+script = ExtResource("2_item")
+id = "hat_green"
+tab = 0
+title = "Hat Green"
+price = 300
+color = Color(0.38, 0.66, 0.32, 1)
+style = 3
+
+[sub_resource type="Resource" id="hat_goose"]
+script = ExtResource("2_item")
+id = "hat_goose"
+tab = 0
+title = "Course Goose"
+price = 400
+color = Color(0.96, 0.95, 0.92, 1)
+style = 4
+
+[sub_resource type="Resource" id="hat_propeller"]
+script = ExtResource("2_item")
+id = "hat_propeller"
+tab = 0
+title = "Power Propeller"
+price = 250
+color = Color(0.86, 0.22, 0.2, 1)
+style = 5
+
+[sub_resource type="Resource" id="shirt_flamingo"]
+script = ExtResource("2_item")
+id = "shirt_flamingo"
+tab = 1
+title = "Flamingo Tourist"
+price = 150
+color = Color(0.22, 0.6, 0.64, 1)
+style = 1
+
+[sub_resource type="Resource" id="pants_plaid"]
+script = ExtResource("2_item")
+id = "pants_plaid"
+tab = 2
+title = "Clash Plaid"
+price = 150
+color = Color(0.78, 0.2, 0.22, 1)
+style = 1
+
+[sub_resource type="Resource" id="pants_knickers"]
+script = ExtResource("2_item")
+id = "pants_knickers"
+tab = 2
+title = "Knickerbockers"
+price = 200
+color = Color(0.55, 0.45, 0.32, 1)
+style = 2
+
+[sub_resource type="Resource" id="shoes_clown"]
+script = ExtResource("2_item")
+id = "shoes_clown"
+tab = 3
+title = "Clown Shoes"
+price = 250
+color = Color(0.86, 0.18, 0.16, 1)
+style = 1
+
+[sub_resource type="Resource" id="shoes_bunny"]
+script = ExtResource("2_item")
+id = "shoes_bunny"
+tab = 3
+title = "Bunny Slippers"
+price = 150
+color = Color(0.96, 0.94, 0.95, 1)
+style = 2
+
+[sub_resource type="Resource" id="ball_meatball"]
+script = ExtResource("2_item")
+id = "ball_meatball"
+tab = 4
+title = "Meatball"
+price = 150
+color = Color(0.48, 0.28, 0.18, 1)
+style = 2
+
+[sub_resource type="Resource" id="ball_disco"]
+script = ExtResource("2_item")
+id = "ball_disco"
+tab = 4
+title = "Disco Ball"
+price = 250
+color = Color(0.8, 0.82, 0.86, 1)
+style = 3
+
+[sub_resource type="Resource" id="ball_eyeball"]
+script = ExtResource("2_item")
+id = "ball_eyeball"
+tab = 4
+title = "Eyeball"
+price = 300
+color = Color(0.97, 0.96, 0.94, 1)
+style = 4
+
+[sub_resource type="Resource" id="club_fish"]
+script = ExtResource("2_item")
+id = "club_fish"
+tab = 5
+title = "Fresh Catch"
+price = 350
+color = Color(0.75, 0.78, 0.8, 1)
+style = 1
+
+[sub_resource type="Resource" id="club_squeaky"]
+script = ExtResource("2_item")
+id = "club_squeaky"
+tab = 5
+title = "Squeaky Set"
+price = 300
+color = Color(0.85, 0.8, 0.7, 1)
+style = 2
+
+[sub_resource type="Resource" id="trail_bubbles"]
+script = ExtResource("2_item")
+id = "trail_bubbles"
+tab = 6
+title = "Bubble Stream"
+price = 150
+color = Color(0.6, 0.85, 0.95, 1)
+style = 1
+
+[sub_resource type="Resource" id="trail_ducks"]
+script = ExtResource("2_item")
+id = "trail_ducks"
+tab = 6
+title = "Duck Parade"
+price = 300
+color = Color(0.98, 0.84, 0.2, 1)
+style = 2
+
+[sub_resource type="Resource" id="trail_smoke"]
+script = ExtResource("2_item")
+id = "trail_smoke"
+tab = 6
+title = "Sad Smoke"
+price = 200
+color = Color(0.62, 0.62, 0.64, 1)
+style = 3
+
+[resource]
+script = ExtResource("1_cat")
+items = Array[ExtResource("2_item")]([SubResource("hat_bucket"), SubResource("hat_flat"), SubResource("shirt_mint"), SubResource("shirt_navy"), SubResource("pants_khaki"), SubResource("pants_white"), SubResource("shoes_white"), SubResource("shoes_brogue"), SubResource("ball_hivis"), SubResource("ball_stripe"), SubResource("club_gold"), SubResource("club_black"), SubResource("hat_green"), SubResource("hat_goose"), SubResource("hat_propeller"), SubResource("shirt_flamingo"), SubResource("pants_plaid"), SubResource("pants_knickers"), SubResource("shoes_clown"), SubResource("shoes_bunny"), SubResource("ball_meatball"), SubResource("ball_disco"), SubResource("ball_eyeball"), SubResource("club_fish"), SubResource("club_squeaky"), SubResource("trail_bubbles"), SubResource("trail_ducks"), SubResource("trail_smoke")])

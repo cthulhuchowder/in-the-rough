@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="SoundscapeSet" format=3]
+
+[ext_resource type="Script" path="res://scripts/soundscape_set.gd" id="set"]
+[ext_resource type="Script" path="res://scripts/soundscape_shot.gd" id="shot"]
+[ext_resource type="AudioStream" path="res://audio/ambience/underwater/base_drone.wav" id="base"]
+[ext_resource type="AudioStream" path="res://audio/ambience/underwater/water_bubbling.wav" id="water"]
+[ext_resource type="AudioStream" path="res://audio/ambience/underwater/bubble_stream.wav" id="bubble_stream_0"]
+[ext_resource type="AudioStream" path="res://audio/ambience/underwater/whale_moan.wav" id="whale_moan_1"]
+[ext_resource type="AudioStream" path="res://audio/ambience/underwater/creak.wav" id="creak_2"]
+
+[sub_resource type="Resource" id="shot_0"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("bubble_stream_0")])
+interval = Vector2(3.0, 8.0)
+distance = Vector2(6.0, 20.0)
+height = Vector2(0.0, 3.0)
+volume_db = -10.0
+pitch = Vector2(0.85000002384186, 1.20000004768372)
+
+[sub_resource type="Resource" id="shot_1"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("whale_moan_1")])
+interval = Vector2(25.0, 55.0)
+distance = Vector2(80.0, 140.0)
+height = Vector2(5.0, 20.0)
+volume_db = -5.0
+pitch = Vector2(0.85000002384186, 1.10000002384186)
+
+[sub_resource type="Resource" id="shot_2"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("creak_2")])
+interval = Vector2(12.0, 30.0)
+distance = Vector2(25.0, 60.0)
+height = Vector2(0.0, 4.0)
+volume_db = -8.0
+pitch = Vector2(0.80000001192093, 1.10000002384186)
+
+[resource]
+script = ExtResource("set")
+base = ExtResource("base")
+base_db = -11.0
+water = ExtResource("water")
+water_db = -10.0
+shots = Array[SoundscapeShot]([SubResource("shot_0"), SubResource("shot_1"), SubResource("shot_2")])

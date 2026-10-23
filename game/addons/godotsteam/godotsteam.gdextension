@@ -1,0 +1,15 @@
+; GodotSteam 4.23.1 (Steamworks SDK 1.65), from the Godot asset library (asset 2445), MIT.
+; Trimmed to the client platforms we ship. The Linux dedicated server never loads Steam.
+[configuration]
+entry_symbol = "godotsteam_init"
+compatibility_minimum = "4.4"
+
+[libraries]
+macos.debug = "res://addons/godotsteam/osx/libgodotsteam.macos.template_debug.universal.dylib"
+macos.release = "res://addons/godotsteam/osx/libgodotsteam.macos.template_release.universal.dylib"
+windows.debug.x86_64 = "res://addons/godotsteam/win64/libgodotsteam.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "res://addons/godotsteam/win64/libgodotsteam.windows.template_release.x86_64.dll"
+
+[dependencies]
+macos.universal = { "res://addons/godotsteam/osx/libsteam_api.dylib": "" }
+windows.x86_64 = { "res://addons/godotsteam/win64/steam_api64.dll": "" }

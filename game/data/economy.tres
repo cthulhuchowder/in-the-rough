@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EconomyParams" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/economy_params.gd" id="1_econ"]
+
+[resource]
+script = ExtResource("1_econ")
+base_par3 = 20
+base_par4 = 30
+base_par5 = 40
+under_par_per_stroke = 25
+hole_in_one = 150
+longest_drive = 15
+closest_to_pin = 15
+offline_share = 0.5
+sync_cap = 2000

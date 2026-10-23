@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="ClubData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/club_data.gd" id="1_club"]
+
+[resource]
+script = ExtResource("1_club")
+label = "3I"
+display_name = "3 iron"
+strength = 76.0
+loft_deg = 20.0
+smash = 1.0
+power_mul = 1.0
+curve_mul = 0.9
+backspin = 1.0
+lift = 0.002287
+stance_dist = 1.05
+camera_back = 0.15
+hitbox_gain = Vector2(2.7, 2.3)
+hitbox_late_offset = 0.0
+hitbox_offset = Vector3(0.023, 0.07, -0.04)
+hitbox_scale = Vector3(1, 0.5, 0.7)
+hand_angle = 0.02
+fp_contact_offset = 0.0388
+fp_shaft_lean = -0.07
+fp_shaft_forward_lean = 0.198
+model = 1
+shaft_length = 0.99
+grip_length = 0.26
+head_size = Vector3(0.078, 0.044, 0.017)
+lie_deg = 60
+carry_fairway = 151.9
+carry_rough = 151.8
+carry_sand = 151.8

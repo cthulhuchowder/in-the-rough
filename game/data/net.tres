@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="NetParams" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/net_params.gd" id="1_net"]
+
+[resource]
+script = ExtResource("1_net")
+port = 7777
+max_players = 8
+default_address = "127.0.0.1"
+snapshot_hz = 30.0
+prediction_window = 0.1
+interp_delay = 0.066
+extrapolate_max = 0.1
+tee_slot_spacing = 2.0
+scorecard_delay = 4.0
+bot_think_time = 0.3
+bot_walk_time = 1.0
+holes_per_round = 9
+room_code_length = 6
+tab_hold_time = 0.25
+spectate_distance = 6.0
+spectate_height = 2.0
+spectate_look_gain = 0.01
+steam_app_id = 480
+swing_send_hz = 20.0
+walk_send_hz = 10.0
+walk_timeout = 0.5
+walk_max_range = 600.0
+flyover_wait_max = 12.0
+chat_max_length = 120
+chat_min_interval = 0.4

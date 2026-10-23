@@ -1,0 +1,69 @@
+[gd_resource type="Resource" script_class="Biome" format=3]
+
+[ext_resource type="Script" path="res://scripts/prop_kind.gd" id="1_h7y1a"]
+[ext_resource type="Resource" path="res://data/props/tumbleweed.tres" id="2_75mr8"]
+[ext_resource type="Resource" path="res://data/props/dry_shrub.tres" id="3_a7rt2"]
+[ext_resource type="Resource" path="res://data/props/sandstone.tres" id="4_estw4"]
+[ext_resource type="Resource" path="res://data/props/boulder.tres" id="5_a7rt2"]
+[ext_resource type="Script" path="res://scripts/biome.gd" id="5_mypu3"]
+[ext_resource type="Resource" path="res://data/props/palm.tres" id="6_estw4"]
+[ext_resource type="Resource" path="res://data/props/cactus.tres" id="6_iyjr7"]
+
+[ext_resource type="Resource" path="res://data/props/barrel_cactus.tres" id="20_barrel"]
+
+[ext_resource type="Resource" path="res://data/props/prickly_pear.tres" id="21_pear"]
+
+[ext_resource type="Resource" path="res://data/soundscapes/oasis.tres" id="soundscape"]
+
+[resource]
+script = ExtResource("5_mypu3")
+soundscape = ExtResource("soundscape")
+name = "oasis"
+display_name = "Oasis"
+card_color = Color(0.98, 0.76, 0.4, 1)
+fairway_color = Color(0.56, 0.62, 0.36, 1)
+rough_color = Color(0.8, 0.68, 0.47, 1)
+green_color = Color(0.5, 0.66, 0.38, 1)
+sand_color = Color(0.93, 0.8, 0.58, 1)
+sky_top = Color(0.38, 0.64, 0.88, 1)
+sky_horizon = Color(0.97, 0.87, 0.68, 1)
+ground_horizon = Color(0.86, 0.74, 0.56, 1)
+ground_bottom = Color(0.6, 0.5, 0.38, 1)
+fog_color = Color(0.97, 0.87, 0.68, 1)
+fog_density = 0.0007
+sun_rotation = Vector2(66, 30)
+sun_color = Color(1, 0.93, 0.8, 1)
+sun_energy = 0.8
+water_name = "water"
+water_color = Color(0.3, 0.68, 0.72, 1)
+water_alpha = 0.8
+relief_freq = 1.5
+trees = Array[ExtResource("1_h7y1a")]([ExtResource("6_iyjr7")])
+groves_per_km2 = 220.0
+grove_size = Vector2i(2, 6)
+grove_radius = 16.0
+grove_gap = 45.0
+tree_line_step = 9.0
+tree_line_offset = Vector2(10, 25)
+tree_line_gaps = 0.6
+landmark_chance = 0.05
+landmark_scale = 2.2
+landmark_radius = 45.0
+landmark_bend_deg = 12.0
+forest_inset = 5.0
+forest_density = 4.5
+forest_depth = 30.0
+forest_grove_radius = 10.0
+forest_tree_scale = 1.3
+forest_bushes_per_km2 = 900.0
+props = Array[ExtResource("1_h7y1a")]([ExtResource("2_75mr8"), ExtResource("3_a7rt2"), ExtResource("4_estw4"), ExtResource("5_a7rt2"), ExtResource("6_estw4"), ExtResource("20_barrel"), ExtResource("21_pear")])
+prop_min_spacing = 3.0
+tufts_per_m2 = 0.35
+tuft_color = Color(0.78, 0.68, 0.42, 1)
+oob_color = Color(0.74, 0.62, 0.44, 1)
+oob_pattern = 1
+ob_fog_bands = 6
+rough_ripples = 1.0
+mesas = 9
+mesa_color = Color(0.74, 0.5, 0.36, 1)
+heat_shimmer = 0.8

@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="SoundscapeSet" format=3]
+
+[ext_resource type="Script" path="res://scripts/soundscape_set.gd" id="set"]
+[ext_resource type="Script" path="res://scripts/soundscape_shot.gd" id="shot"]
+[ext_resource type="AudioStream" path="res://audio/ambience/magma/base_rumble.wav" id="base"]
+[ext_resource type="AudioStream" path="res://audio/ambience/magma/water_lava_bubbling.wav" id="water"]
+[ext_resource type="AudioStream" path="res://audio/ambience/magma/lava_crackle.wav" id="lava_crackle_0"]
+[ext_resource type="AudioStream" path="res://audio/ambience/magma/lava_pop.wav" id="lava_pop_1"]
+[ext_resource type="AudioStream" path="res://audio/ambience/magma/steam_hiss.wav" id="steam_hiss_2"]
+
+[sub_resource type="Resource" id="shot_0"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("lava_crackle_0")])
+interval = Vector2(2.0, 6.0)
+distance = Vector2(10.0, 35.0)
+height = Vector2(0.0, 1.0)
+volume_db = -10.0
+pitch = Vector2(0.85000002384186, 1.14999997615814)
+
+[sub_resource type="Resource" id="shot_1"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("lava_pop_1")])
+interval = Vector2(3.0, 9.0)
+distance = Vector2(10.0, 40.0)
+height = Vector2(0.0, 1.0)
+volume_db = -8.0
+pitch = Vector2(0.75, 1.25)
+
+[sub_resource type="Resource" id="shot_2"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("steam_hiss_2")])
+interval = Vector2(10.0, 24.0)
+distance = Vector2(15.0, 45.0)
+height = Vector2(0.0, 2.0)
+volume_db = -10.0
+pitch = Vector2(0.89999997615814, 1.10000002384186)
+
+[resource]
+script = ExtResource("set")
+base = ExtResource("base")
+base_db = -9.0
+water = ExtResource("water")
+water_db = -8.0
+shots = Array[SoundscapeShot]([SubResource("shot_0"), SubResource("shot_1"), SubResource("shot_2")])

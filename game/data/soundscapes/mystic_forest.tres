@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="SoundscapeSet" format=3]
+
+[ext_resource type="Script" path="res://scripts/soundscape_set.gd" id="set"]
+[ext_resource type="Script" path="res://scripts/soundscape_shot.gd" id="shot"]
+[ext_resource type="AudioStream" path="res://audio/ambience/mystic_forest/base_shimmer.wav" id="base"]
+[ext_resource type="AudioStream" path="res://audio/ambience/mystic_forest/water_brook.wav" id="water"]
+[ext_resource type="AudioStream" path="res://audio/ambience/mystic_forest/chime_1.wav" id="chime_1_0"]
+[ext_resource type="AudioStream" path="res://audio/ambience/mystic_forest/chime_2.wav" id="chime_2_0"]
+[ext_resource type="AudioStream" path="res://audio/ambience/mystic_forest/chime_3.wav" id="chime_3_0"]
+[ext_resource type="AudioStream" path="res://audio/ambience/mystic_forest/odd_hoot.wav" id="odd_hoot_1"]
+
+[sub_resource type="Resource" id="shot_0"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("chime_1_0"), ExtResource("chime_2_0"), ExtResource("chime_3_0")])
+interval = Vector2(5.0, 12.0)
+distance = Vector2(10.0, 35.0)
+height = Vector2(2.0, 8.0)
+volume_db = -9.0
+pitch = Vector2(0.94999998807907, 1.04999995231628)
+
+[sub_resource type="Resource" id="shot_1"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("odd_hoot_1")])
+interval = Vector2(15.0, 35.0)
+distance = Vector2(30.0, 70.0)
+height = Vector2(4.0, 12.0)
+volume_db = -7.0
+pitch = Vector2(0.85000002384186, 1.20000004768372)
+
+[resource]
+script = ExtResource("set")
+base = ExtResource("base")
+base_db = -15.0
+water = ExtResource("water")
+water_db = -8.0
+shots = Array[SoundscapeShot]([SubResource("shot_0"), SubResource("shot_1")])

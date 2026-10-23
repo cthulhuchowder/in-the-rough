@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="ClubData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/club_data.gd" id="1_club"]
+
+[resource]
+script = ExtResource("1_club")
+label = "SW"
+display_name = "Sand wedge"
+strength = 56.0
+loft_deg = 50.0
+smash = 1.0
+power_mul = 0.7
+curve_mul = 0.1
+backspin = 4.0
+lift = 0.001279
+stance_dist = 1.05
+camera_back = 0.15
+hitbox_gain = Vector2(2.7, 2.3)
+hitbox_late_offset = 0.022
+hitbox_offset = Vector3(0.023, 0.07, -0.04)
+hitbox_scale = Vector3(1, 0.5, 0.7)
+hand_angle = 0.02
+fp_contact_offset = 0.0959
+fp_shaft_lean = -0.065
+fp_shaft_forward_lean = 0.238
+model = 2
+shaft_length = 0.89
+grip_length = 0.26
+head_size = Vector3(0.081, 0.054, 0.035)
+lie_deg = 64
+carry_fairway = 70.0
+carry_rough = 70.0
+carry_sand = 70.0

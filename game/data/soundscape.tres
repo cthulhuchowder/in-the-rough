@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SoundscapeParams" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/soundscape_params.gd" id="1_ss"]
+
+[resource]
+script = ExtResource("1_ss")
+unit_size = 18.0
+max_distance = 160.0
+water_reach = 45.0
+water_unit_size = 6.0
+water_search_every = 0.5
+duck_db = -14.0
+duck_in = 0.3
+duck_out = 1.5
+fade_in = 2.0

@@ -1,0 +1,59 @@
+[gd_resource type="Resource" script_class="Biome" format=3]
+
+[ext_resource type="Script" path="res://scripts/biome.gd" id="1_biome"]
+[ext_resource type="Resource" path="res://data/props/round_tree.tres" id="2_round"]
+[ext_resource type="Resource" path="res://data/props/conifer.tres" id="3_conifer"]
+[ext_resource type="Resource" path="res://data/props/bushy_tree.tres" id="4_bushy"]
+[ext_resource type="Resource" path="res://data/props/bush.tres" id="5_bush"]
+[ext_resource type="Resource" path="res://data/props/rock.tres" id="6_rock"]
+[ext_resource type="Script" path="res://scripts/prop_kind.gd" id="7_kind"]
+
+[ext_resource type="Resource" path="res://data/soundscapes/parkland.tres" id="soundscape"]
+
+[resource]
+script = ExtResource("1_biome")
+soundscape = ExtResource("soundscape")
+name = "parkland"
+display_name = "Parkland"
+card_color = Color(0.72, 0.84, 0.6, 1)
+fairway_color = Color(0.498, 0.6039, 0.4471, 1)
+rough_color = Color(0.4039, 0.502, 0.3725, 1)
+green_color = Color(0.5765, 0.6824, 0.5176, 1)
+sand_color = Color(0.8039, 0.7686, 0.6667, 1)
+sky_top = Color(0.5569, 0.6, 0.6392, 1)
+sky_horizon = Color(0.7255, 0.7529, 0.7686, 1)
+ground_horizon = Color(0.6157, 0.6392, 0.6118, 1)
+ground_bottom = Color(0.4353, 0.4549, 0.4235, 1)
+fog_color = Color(0.7059, 0.7373, 0.7529, 1)
+fog_density = 0.0022
+sun_rotation = Vector2(50, 20)
+sun_color = Color(0.902, 0.9137, 0.9255, 1)
+sun_energy = 0.45
+water_name = "water"
+water_color = Color(0.498, 0.5882, 0.6275, 1)
+water_alpha = 0.75
+trees = Array[ExtResource("7_kind")]([ExtResource("2_round"), ExtResource("3_conifer"), ExtResource("4_bushy")])
+groves_per_km2 = 280.0
+grove_size = Vector2i(5, 15)
+grove_radius = 16.0
+grove_gap = 45.0
+tree_line_step = 9.0
+tree_line_offset = Vector2(10, 25)
+tree_line_gaps = 0.3
+landmark_chance = 0.05
+landmark_scale = 2.2
+landmark_radius = 45.0
+landmark_bend_deg = 12.0
+forest_inset = 5.0
+forest_density = 4.5
+forest_depth = 30.0
+forest_grove_radius = 10.0
+forest_tree_scale = 1.3
+forest_bushes_per_km2 = 900.0
+props = Array[ExtResource("7_kind")]([ExtResource("5_bush"), ExtResource("6_rock")])
+prop_min_spacing = 3.0
+tufts_per_m2 = 0.4
+tuft_color = Color(0.4392, 0.5333, 0.3961, 1)
+oob_color = Color(0.4784, 0.4549, 0.4, 1)
+oob_pattern = 2
+ob_fog_bands = 12

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PropKind" format=3]
+
+[ext_resource type="Script" path="res://scripts/prop_kind.gd" id="1_xmme8"]
+
+[resource]
+script = ExtResource("1_xmme8")
+shape = 28
+sizes = Array[Vector2]([Vector2(0, 0.35), Vector2(0, 0.5), Vector2(0, 0.7)])
+color = Color(0.56, 0.6, 0.4, 1)
+hue_jitter = 0.02
+value_jitter = 0.05
+per_km2 = 440.0
+palette = PackedColorArray()
+height_range = Vector2(0.8, 1.25)
+width_range = Vector2(0.85, 1.2)
+trunk_range = Vector2(0.85, 1.2)

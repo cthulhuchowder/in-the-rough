@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SurfaceData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/surface_data.gd" id="1_surface"]
+
+[resource]
+resource_name = "Green"
+script = ExtResource("1_surface")
+friction = 0.1
+restitution = 0.33
+hazard = 0
+color = Color(0.5765, 0.6824, 0.5176, 1)

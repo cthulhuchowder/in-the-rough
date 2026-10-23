@@ -1,0 +1,97 @@
+[gd_scene load_steps=22 format=3]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/swing.gd" id="3_swing"]
+[ext_resource type="Script" path="res://scripts/mouse_swing_feeder.gd" id="4_feeder"]
+[ext_resource type="Script" path="res://scripts/swing_gesture.gd" id="5_gesture"]
+[ext_resource type="Resource" path="res://data/swing_feel.tres" id="6_feel"]
+[ext_resource type="Resource" path="res://data/clubs/driver.tres" id="7_driver"]
+[ext_resource type="Resource" path="res://data/rules.tres" id="9_rules"]
+[ext_resource type="Script" path="res://scripts/walker.gd" id="10_walker"]
+[ext_resource type="Resource" path="res://data/procgen.tres" id="11_procgen"]
+[ext_resource type="PackedScene" path="res://ball.tscn" id="12_ball"]
+[ext_resource type="PackedScene" path="res://art/presets/overcast.tscn" id="13_look"]
+
+[sub_resource type="Resource" id="Resource_gesture"]
+script = ExtResource("5_gesture")
+
+
+
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_walker"]
+radius = 0.3
+height = 1.8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hit"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_hit"]
+albedo_color = Color(0.9, 0.2, 0.2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hit"]
+material = SubResource("Mat_hit")
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+rules = ExtResource("9_rules")
+procgen = ExtResource("11_procgen")
+
+[node name="Look" parent="." instance=ExtResource("13_look")]
+
+[node name="Ball" parent="." instance=ExtResource("12_ball")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+fov = 70.0
+
+[node name="MouseSwingFeeder" type="Node" parent="." node_paths=PackedStringArray("swing")]
+script = ExtResource("4_feeder")
+gesture = SubResource("Resource_gesture")
+feel = ExtResource("6_feel")
+swing = NodePath("../Swing")
+
+[node name="Swing" type="Node3D" parent="." node_paths=PackedStringArray("ball", "camera")]
+script = ExtResource("3_swing")
+feel = ExtResource("6_feel")
+club = ExtResource("7_driver")
+gesture = SubResource("Resource_gesture")
+ball = NodePath("../Ball")
+camera = NodePath("../Camera3D")
+
+[node name="HitBox" type="ShapeCast3D" parent="Swing"]
+shape = SubResource("BoxShape3D_hit")
+target_position = Vector3(0, 0, 0)
+max_results = 1
+collision_mask = 4
+
+[node name="Mesh" type="MeshInstance3D" parent="Swing/HitBox"]
+visible = false
+mesh = SubResource("BoxMesh_hit")
+
+[node name="Walker" type="CharacterBody3D" parent="." node_paths=PackedStringArray("camera")]
+collision_layer = 2
+script = ExtResource("10_walker")
+feel = ExtResource("6_feel")
+gesture = SubResource("Resource_gesture")
+camera = NodePath("../Camera3D")
+
+[node name="Shape" type="CollisionShape3D" parent="Walker"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_walker")
+
+[node name="Overlay" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="Overlay"]
+offset_left = 16.0
+offset_top = 16.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+
+[node name="Seed" type="LineEdit" parent="Overlay"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -276.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 47.0
+grow_horizontal = 0
+placeholder_text = "course seed (decimal or 0x hex)"

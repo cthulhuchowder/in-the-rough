@@ -1,0 +1,54 @@
+[gd_resource type="Resource" script_class="SoundscapeSet" format=3]
+
+[ext_resource type="Script" path="res://scripts/soundscape_set.gd" id="set"]
+[ext_resource type="Script" path="res://scripts/soundscape_shot.gd" id="shot"]
+[ext_resource type="AudioStream" path="res://audio/ambience/cemetery/base_cold_wind.wav" id="base"]
+[ext_resource type="AudioStream" path="res://audio/ambience/cemetery/water_bog.wav" id="water"]
+[ext_resource type="AudioStream" path="res://audio/ambience/cemetery/crow.wav" id="crow_0"]
+[ext_resource type="AudioStream" path="res://audio/ambience/cemetery/gate_creak.wav" id="gate_creak_1"]
+[ext_resource type="AudioStream" path="res://audio/ambience/cemetery/faint_howl.wav" id="faint_howl_2"]
+[ext_resource type="AudioStream" path="res://audio/ambience/cemetery/church_bell.wav" id="church_bell_3"]
+
+[sub_resource type="Resource" id="shot_0"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("crow_0")])
+interval = Vector2(10.0, 25.0)
+distance = Vector2(25.0, 60.0)
+height = Vector2(4.0, 12.0)
+volume_db = -8.0
+pitch = Vector2(0.85000002384186, 1.10000002384186)
+
+[sub_resource type="Resource" id="shot_1"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("gate_creak_1")])
+interval = Vector2(20.0, 45.0)
+distance = Vector2(25.0, 60.0)
+height = Vector2(0.0, 2.0)
+volume_db = -9.0
+pitch = Vector2(0.89999997615814, 1.10000002384186)
+
+[sub_resource type="Resource" id="shot_2"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("faint_howl_2")])
+interval = Vector2(35.0, 80.0)
+distance = Vector2(110.0, 150.0)
+height = Vector2(0.0, 5.0)
+volume_db = -6.0
+pitch = Vector2(0.9200000166893, 1.04999995231628)
+
+[sub_resource type="Resource" id="shot_3"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("church_bell_3")])
+interval = Vector2(50.0, 110.0)
+distance = Vector2(120.0, 150.0)
+height = Vector2(15.0, 30.0)
+volume_db = -6.0
+pitch = Vector2(0.98000001907349, 1.01999998092651)
+
+[resource]
+script = ExtResource("set")
+base = ExtResource("base")
+base_db = -12.0
+water = ExtResource("water")
+water_db = -9.0
+shots = Array[SoundscapeShot]([SubResource("shot_0"), SubResource("shot_1"), SubResource("shot_2"), SubResource("shot_3")])

@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="ClubData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/club_data.gd" id="1_club"]
+
+[resource]
+script = ExtResource("1_club")
+label = "P"
+display_name = "Putter"
+strength = 10.0
+loft_deg = 0.0
+smash = 1.0
+power_mul = 1.0
+curve_mul = 0.0
+backspin = 0.0
+lift = 0.0
+stance_dist = 0.75
+camera_back = 0.3
+aim_side_view = true
+hitbox_gain = Vector2(2.4, 1.8)
+hitbox_late_offset = 0.0
+hitbox_offset = Vector3(0.005, 0.04, 0.06)
+hitbox_scale = Vector3(1, 0.3, 0.9)
+hand_angle = -0.13
+fp_contact_offset = 0.0389
+fp_shaft_lean = -0.085
+fp_shaft_forward_lean = 0.164
+model = 3
+shaft_length = 0.86
+grip_length = 0.28
+head_size = Vector3(0.11, 0.024, 0.03)
+lie_deg = 70
+carry_fairway = 0.0
+carry_rough = 0.0
+carry_sand = 0.0

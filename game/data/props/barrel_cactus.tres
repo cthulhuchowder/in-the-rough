@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PropKind" format=3]
+
+[ext_resource type="Script" path="res://scripts/prop_kind.gd" id="1_pk"]
+
+[resource]
+script = ExtResource("1_pk")
+shape = 26
+sizes = Array[Vector2]([Vector2(0.55, 0.42), Vector2(0.75, 0.55), Vector2(0.95, 0.7)])
+color = Color(0.4, 0.55, 0.32, 1)
+per_km2 = 60.0
+cluster = Vector2i(0, 2)
+cluster_radius = 2.0
+hue_jitter = 0.02
+value_jitter = 0.05

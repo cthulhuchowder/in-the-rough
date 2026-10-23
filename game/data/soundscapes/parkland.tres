@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="SoundscapeSet" format=3]
+
+[ext_resource type="Script" path="res://scripts/soundscape_set.gd" id="set"]
+[ext_resource type="Script" path="res://scripts/soundscape_shot.gd" id="shot"]
+[ext_resource type="AudioStream" path="res://audio/ambience/parkland/base_breeze.wav" id="base"]
+[ext_resource type="AudioStream" path="res://audio/ambience/parkland/water_lapping.wav" id="water"]
+[ext_resource type="AudioStream" path="res://audio/ambience/parkland/songbird_1.wav" id="songbird_1_0"]
+[ext_resource type="AudioStream" path="res://audio/ambience/parkland/songbird_2.wav" id="songbird_2_0"]
+[ext_resource type="AudioStream" path="res://audio/ambience/parkland/songbird_3.wav" id="songbird_3_0"]
+[ext_resource type="AudioStream" path="res://audio/ambience/parkland/lawnmower.wav" id="lawnmower_1"]
+
+[sub_resource type="Resource" id="shot_0"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("songbird_1_0"), ExtResource("songbird_2_0"), ExtResource("songbird_3_0")])
+interval = Vector2(2.5, 7.0)
+distance = Vector2(20.0, 55.0)
+height = Vector2(3.0, 9.0)
+volume_db = -6.0
+pitch = Vector2(0.9200000166893, 1.10000002384186)
+
+[sub_resource type="Resource" id="shot_1"]
+script = ExtResource("shot")
+streams = Array[AudioStream]([ExtResource("lawnmower_1")])
+interval = Vector2(45.0, 90.0)
+distance = Vector2(120.0, 150.0)
+height = Vector2(0.0, 1.0)
+volume_db = -4.0
+pitch = Vector2(0.94999998807907, 1.04999995231628)
+
+[resource]
+script = ExtResource("set")
+base = ExtResource("base")
+base_db = -14.0
+water = ExtResource("water")
+water_db = -10.0
+shots = Array[SoundscapeShot]([SubResource("shot_0"), SubResource("shot_1")])

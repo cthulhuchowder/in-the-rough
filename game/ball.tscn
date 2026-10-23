@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/ball.gd" id="1_ball"]
+[ext_resource type="Resource" path="res://data/swing_feel.tres" id="2_feel"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ball"]
+resource_local_to_scene = true
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ball"]
+radius = 0.05
+
+[sub_resource type="StandardMaterial3D" id="Mat_ball"]
+albedo_color = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ball"]
+material = SubResource("Mat_ball")
+radius = 0.05
+height = 0.1
+
+[node name="Ball" type="RigidBody3D"]
+collision_layer = 4
+physics_material_override = SubResource("PhysicsMaterial_ball")
+can_sleep = false
+lock_rotation = true
+freeze = true
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 4
+script = ExtResource("1_ball")
+feel = ExtResource("2_feel")
+
+[node name="Shape" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_ball")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_ball")

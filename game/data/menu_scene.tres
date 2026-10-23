@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="MenuSceneParams" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/menu_scene_params.gd" id="1_menu"]
+
+[resource]
+script = ExtResource("1_menu")
+flag_right = 2.1
+golfer_right = 1.0
+cart_left = 4.0
+caddy_lean = 0.12
+orbit_radius = 8.6
+orbit_height = 1.9
+orbit_speed = 0.18
+look_height = 1.1
+arc_deg = 6.0
+turn_rate = 1.5
+wave_out = 0.38
+wave_height = 0.62
+wave_sway = 0.14
+wave_rate = 1.4
+confetti_amount = 70
+confetti_lifetime = 14.0
+confetti_fall = 0.25
+confetti_box = Vector3(7, 0.5, 7)
+title_left = 1.2
+title_back = 7.0
+mound_size = Vector3(7, 1.4, 3)
+letter_size = 0.62
+title_drop = 9.0
+title_bounce_time = 0.9
+title_stagger = 0.07
+centre_screen_x = 0.62
+push_in = 0.3

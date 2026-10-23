@@ -1,0 +1,62 @@
+[gd_resource type="Resource" script_class="Biome" format=3]
+
+[ext_resource type="Script" path="res://scripts/prop_kind.gd" id="1_74hr5"]
+[ext_resource type="Resource" path="res://data/props/basalt.tres" id="2_wjjxd"]
+[ext_resource type="Script" path="res://scripts/biome.gd" id="3_1rmci"]
+[ext_resource type="Resource" path="res://data/props/burnt_tree.tres" id="4_p6l6w"]
+
+[ext_resource type="Resource" path="res://data/soundscapes/magma.tres" id="soundscape"]
+
+[resource]
+script = ExtResource("3_1rmci")
+soundscape = ExtResource("soundscape")
+name = "magma"
+display_name = "Magma"
+card_color = Color(1, 0.45, 0.25, 1)
+fairway_color = Color(0.5, 0.52, 0.34, 1)
+rough_color = Color(0.32, 0.27, 0.25, 1)
+green_color = Color(0.58, 0.6, 0.36, 1)
+sand_color = Color(0.36, 0.33, 0.32, 1)
+sky_top = Color(0.26, 0.1, 0.08, 1)
+sky_horizon = Color(0.7, 0.32, 0.18, 1)
+ground_horizon = Color(0.4, 0.14, 0.08, 1)
+ground_bottom = Color(0.12, 0.05, 0.04, 1)
+fog_color = Color(0.55, 0.24, 0.14, 1)
+fog_density = 0.0022
+sun_rotation = Vector2(35, -40)
+sun_color = Color(1, 0.74, 0.58, 1)
+sun_energy = 0.95
+ambient = 2
+water_name = "lava"
+water_color = Color(1, 0.36, 0.06, 1)
+water_alpha = 1.0
+water_glow = 2.0
+relief_amp = 1.8
+relief_freq = 1.6
+pits = Vector2i(1, 3)
+pit_radius = 8.0
+trees = Array[ExtResource("1_74hr5")]([ExtResource("4_p6l6w")])
+groves_per_km2 = 160.0
+grove_size = Vector2i(3, 8)
+grove_radius = 16.0
+grove_gap = 45.0
+tree_line_step = 9.0
+tree_line_offset = Vector2(10, 25)
+tree_line_gaps = 0.45
+landmark_chance = 0.05
+landmark_scale = 2.2
+landmark_radius = 45.0
+landmark_bend_deg = 12.0
+forest_inset = 5.0
+forest_density = 4.5
+forest_depth = 30.0
+forest_grove_radius = 10.0
+forest_tree_scale = 1.3
+forest_bushes_per_km2 = 900.0
+props = Array[ExtResource("1_74hr5")]([ExtResource("2_wjjxd")])
+prop_min_spacing = 3.0
+tufts_per_m2 = 0.12
+tuft_color = Color(0.36, 0.33, 0.26, 1)
+oob_color = Color(0.22, 0.19, 0.18, 1)
+oob_pattern = 3
+ob_fog_bands = 10

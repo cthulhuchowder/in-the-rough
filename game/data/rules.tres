@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="RulesData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/rules_data.gd" id="1_rules"]
+
+[resource]
+script = ExtResource("1_rules")
+max_strokes = 14
+pickup_score = 14
+penalty_strokes = 1
+water_delay = 3.0
+drop_step = 1.0
+drop_push = 5.0
+drop_height = 0.05
+drop_clearance = 1.7
+ground_band = 0.15
+wind_strong_scale = 1.8
